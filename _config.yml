@@ -3,10 +3,10 @@
 # # # # # # # #
 
 # Basic
-name:               "Kiko"
+name:               "codehumane"
 
 # URL
-baseurl:            "/Kiko"
+baseurl:            ""
 #baseurl:            "" #For Root Domain
 permalink:          /:year/:month/:day/:title.html
 
@@ -16,9 +16,7 @@ markdown:           rdiscount
 # Navigation
 nav:
   - name:           "About"
-    href:           "//gfjaru.github.io/Kiko/about"
-  - name:           "Download"
-    href:           "//github.com/gfjaru/Kiko/releases"
+    href:           "/about"
 
 # Sass
 sass:
