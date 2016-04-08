@@ -13,7 +13,7 @@ Documents
 **StackEdit** stores your documents in your browser, which means all your documents are automatically saved locally and are accessible **offline!**
 
 > **NOTE:**
-> 
+>
 > - StackEdit is accessible offline after the application has been loaded for the first time.
 > - Your local documents are not shared between different browsers or computers.
 > - Clearing your browser's data may **delete all your local documents!** Make sure your documents are backed up using **Google Drive** or **Dropbox** synchronization (see [<i class="icon-share"></i> Synchronization](#synchronization) section).
@@ -50,7 +50,7 @@ Synchronization
 **StackEdit** can be combined with **Google Drive** and **Dropbox** to have your documents centralized in the *Cloud*. The synchronization mechanism will take care of uploading your modifications or downloading the latest version of your documents.
 
 > **NOTE:**
-> 
+>
 > - Full access to **Google Drive** or **Dropbox** is required to be able to import any document in StackEdit.
 > - Imported documents are downloaded in your browser and are not transmitted to a server.
 > - If you experience problems exporting documents to Google Drive, check and optionally disable browser extensions, such as Disconnect.
@@ -201,7 +201,7 @@ Usually, comments in Markdown are just standard HTML comments. <!-- like this --
 
 
 ### MathJax
- 
+
 You can render *LaTeX* mathematical expressions using **MathJax**, as on [math.stackexchange.com][1]:
 
 The *Gamma function* satisfying $\Gamma(n) = (n-1)!\quad\forall
@@ -211,7 +211,7 @@ $$
 \Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
 $$
 
-> **Tip:** Make sure you include MathJax into your publications to render mathematical expression correctly. Your page/template should include something like: 
+> **Tip:** Make sure you include MathJax into your publications to render mathematical expression correctly. Your page/template should include something like:
 
 ```
 <script type="text/javascript" src="https://stackedit.io/libs/MathJax/MathJax.js?config=TeX-AMS_HTML"></script>

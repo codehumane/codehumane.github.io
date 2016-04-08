@@ -1,5 +1,5 @@
 // Typography
-$base-font-size: 14px !default;
+$base-font-size: 12px !default;
 $bold-font-weight: bold !default;
 $font-family: 'Nanum Gothic', 'PT Serif', Georgia, 'Times New Roman', serif !default;
 $line-height: 1.5 !default;
@@ -7,12 +7,12 @@ $heading-font-family: 'Nanum Gothic', 'Helvetica Neue', Helvetica, sans-serif !d
 $heading-font-weight: 900 !default;
 $heading-line-height: 1.25 !default;
 $monospace-font-family: 'Nanum Gothic', 'Source Code Pro', Consolas, monospace !default;
-$h1: 2.998rem !default;
+$h1: 2.2rem !default;
 $h2: 1.5rem !default;
-$h3: 1.25rem !default;
-$h4: 1rem !default;
-$h5: .875rem !default;
-$h6: .75rem !default;
+$h3: 1.1rem !default;
+$h4: .85rem !default;
+$h5: .78rem !default;
+$h6: .7rem !default;
 $h00: 4rem !default;
 $h0: 3rem !default;
 $h00-responsive: 8vw !default;
@@ -24,7 +24,7 @@ $h1-responsive-max: 3.84rem !default;
 $abbr-border-bottom: 1px black dotted;
 
 // Page width
-$measure-width: 42rem !default;
+$measure-width: 35rem !default;
 
 // Viewport widths
 $viewport-small: 32em;

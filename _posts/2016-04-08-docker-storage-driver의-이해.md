@@ -20,7 +20,7 @@ docker의 storage driver를 파악하기 위해 docker 공식 문서를 살펴�
 
 ![그림이 없는 경우 아래 URL을 참고하세요.](https://docs.docker.com/engine/userguide/storagedriver/images/container-layers.jpg "Container based on the Ubuntu 15.04 image")
 
-[출처: docs.docker.com/engine/userguide/storagedriver]
+그림 1. Container based on the Ubuntu 15.04 image)(출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
 
 도커의 storage driver는 바로 이러한 레이어들을 스택으로 관리하고 하나의 단일화된 뷰로 제공하는 역할을 수행한다.
 
@@ -42,7 +42,7 @@ docker의 storage driver를 파악하기 위해 docker 공식 문서를 살펴�
 
 ![](https://docs.docker.com/engine/userguide/storagedriver/images/saving-space.jpg "Image Layer Sharing")
 
-[출처: https://docs.docker.com/engine/userguide/storagedriver]
+그림 2. Image Layer Sharing (출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
 
 그림에는 changed-ubuntu라는 이름의 이미지와 ubuntu:15.04라는 이름의 이미지가 있는데, changed-ubuntu는 베이스 이미지<sup>base image</sup>를 ubuntu:15.04로 하는 이미지이다. 베이스 이미지가 가진 레이어는 공유를 하고(복사가 아니라), changed-ubuntu의 차이점만을 레이어 스택에 추가하고 있다. changed-ubuntu의 Dockerfile은 다음과 같다.
 
@@ -59,7 +59,7 @@ RUN echo "Hello world" > /tmp/newfile
 
 ![](https://docs.docker.com/engine/userguide/storagedriver/images/sharing-layers.jpg "Container Layer Sharing")
 
-[출처: https://docs.docker.com/engine/userguide/storagedriver]
+그림 3. Container Layer Sharing (출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
 
 컨테이너는 이미지의 레이어 스택 최상단에 새로운 쓰기 가능한 레이어를 추가하는 형태이므로, 여러개의 컨테이너가 실행되더라도 이미지의 레이어가 공유되어 공간 효율성이 높아진다. 또한, 컨테이너 실행 시 단지 얇고 쓰기 가능한 레이어<sup>thin and writable layer</sup>만 추가하면 되므로 속도도 빠르다(컨테이너 실행 시 마다 매번 이미지의 레이어들을 복사해야 한다고 생각해 보라).
 
@@ -86,17 +86,16 @@ RUN echo "Hello world" > /tmp/newfile
 
 도커에서 제공하는 storage driver는 여러 가지이며, 각각은 자신만의 방식으로 컨테이너 및 이미지의 레이어를 관리한다. 따라서 리눅스 환경과 사용 목적을 고려하여 적절한 것을 선택해야 안정성과 성능 측면의 이점을 누릴 수 있다. storage driver의 종류는 다음과 같다.
 
-Technology    | Storage driver name
---------------|--------------------
-OverlayFS     | overlay
-AUFS          | aufs
-Btrfs         | btrfs
-Device Mapper | vfs
-VFS*          | right
-ZFS           | zfs
+| Technology    | Storage driver name |
+|---------------|---------------------|
+| OverlayFS     | overlay             |
+| AUFS          | aufs                |
+| Btrfs         | btrfs               |
+| Device Mapper | vfs                 |
+| VFS*          | right               |
+| ZFS           | zfs                 |
 
-
-[출처: https://docs.docker.com/engine/userguide/storagedriver]
+표1. storage driver의 종류 (출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
 
 storage driver는 도커 데몬이 실행될 때 결정되며, 아무것도 지정하지 않은 경우에는 시스템 설정을 기반으로 적절한 것이 선택된다(이 때는 안정성<sup>stability</sup>이 중요한 결정 요소가 된다). 도커의 이미지와 컨테이너의 레이어들을 관리하는 것이 storage driver임을 생각할 때, 데몬 인스턴스에 의해 만들어진 컨테이너들에는 모두 동일한 storage driver가 사용됨을 알 수 있다. 실제로도 그러하다.
 
@@ -106,7 +105,7 @@ storage driver는 도커 데몬이 실행될 때 결정되며, 아무것도 지�
 
 {% highlight html %}
 
-[dockeradmin@do-build-slave containers]# docker info
+[dockeradmin@build-slave containers]# docker info
 Containers: 1
  Running: 1
  Paused: 0
@@ -152,16 +151,16 @@ WARNING: bridge-nf-call-ip6tables is disabled
 
 {% endhighlight %}
 
-위 정보는 현재 Jenkins의 Docker Slave로 활용하는 장비에 대한 것이다. 살펴보면 storage driver는 devicemapper, 파일 시스템은 xfs임을 알 수 있다. 한가지 주목할 만한 것은 WARNING 메시지이다.
+위 정보는 현재 Jenkins의 [Docker Slave](https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin)로 활용하는 장비에 대한 것이다. 살펴보면 storage driver는 devicemapper, 파일 시스템은 xfs임을 알 수 있다. 한가지 주목할 만한 것은 WARNING 메시지이다.
 
 > WARNING: Usage of loopback devices is strongly discouraged for production use. Either use `--storage-opt dm.thinpooldev` or use `--storage-opt dm.no_warn_on_loop_devices=true` to suppress this warning.
 
-프로덕션 환경에서 사용하지 않기를 강하게 권장strongly discouraged한다는 것인데, 다른 대안을 찾는 법에 대해서는 바로 다음에서 설명한다.
+프로덕션 환경에서 사용하지 않기를 강하게 권장<sup>strongly discouraged</sup>한다는 것인데, 다른 대안을 찾는 법에 대해서는 바로 다음에서 설명한다.
 
 
 ## storage driver 선택하기
 
-기본으로 설정되는 storage driver 대신 직접 지정하고 싶다면 어떻게 결정해야 할까? 도커 공식 문서에서는 안정성stability과 경험 및 전문성experience and expertise을 언급하고 있다. 안정성에 대해서는 아래 2개를 권고한다.
+기본으로 설정되는 storage driver 대신 직접 지정하고 싶다면 어떻게 결정해야 할까? 도커 공식 문서에서는 안정성<sup>stability</sup>과 경험 및 전문성<sup>experience and expertise</sup>을 언급하고 있다. 안정성에 대해서는 아래 2개를 권고한다.
 
 1. Use the default storage driver for your distribution.
 2. Follow the configuration specified on the CS Engine compatibility matrix.
@@ -170,8 +169,7 @@ storage driver는 도커가 설치될 때 시스템 구성에 따라 적절히 �
 
 경험 및 전문성은 단지 자신이 익숙한 것을 쓰는게 도움이 된다는 이야기이다.
 
-마지막으로, 아래 그림은 각 storage driver의 특성을 비교하는 다이어그램이다. 앞에서 Jenkins Docker Slave 장비의 docker info 내용에서 봤던 경고 메시지처럼, devicemapper (loop)는 production과 performance에서 빨간색 표시(“If bad for use case”를 가리킴)가 되어 있음을 다시 한 번 확인할 수 있다.
+마지막으로, 아래 그림은 각 storage driver의 특성을 비교하는 다이어그램이다. 앞에서 [Jenkins Docker Slave](https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin) 장비의 docker info 내용에서 봤던 경고 메시지처럼, devicemapper (loop)는 production과 performance에서 빨간색 표시(“If bad for use case”를 가리킴)가 되어 있음을 다시 한 번 확인할 수 있다.
 
 ![](https://docs.docker.com/engine/userguide/storagedriver/images/driver-pros-cons.png "storage driver pros and cons")
-
-[출처: https://docs.docker.com/engine/userguide/storagedriver/selectadriver]
+- 그림 4. storage driver pros and cons (출처: [docs.docker.com/engine/userguide/storagedriver/selectadriver](docs.docker.com/engine/userguide/storagedriver/selectadriver))

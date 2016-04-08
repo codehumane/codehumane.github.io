@@ -9,7 +9,7 @@ body {
   padding: 0; }
 
 html {
-  font-family: "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: "Nanum Gothic", "Source Sans Pro", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 15px;
   font-weight: 300;
   line-height: 1.6; }
@@ -123,7 +123,7 @@ blockquote {
 
 code,
 pre {
-  font-family: Menlo, Monaco, "Courier New", monospace; }
+  font-family: Nanum Gothic, Menlo, Monaco, "Courier New", monospace; }
 
 code {
   padding: .25em .5em;

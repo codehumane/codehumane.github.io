@@ -37,7 +37,7 @@ pre,
 code,
 samp {
   font-family: $monospace-font-family;
-  font-size: inherit;
+  font-size: $h4;
 }
 
 pre {
@@ -61,7 +61,7 @@ blockquote {
 
 blockquote,
 blockquote p {
-  font-size: $h3;
+  font-size: $h4;
   font-style: italic;
 }
 
