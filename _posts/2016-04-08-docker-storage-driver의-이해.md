@@ -2,7 +2,7 @@
 layout:     post
 title:      docker storage driver의 이해
 date:       2016-04-07 12:32:18
-summary:    도커 이미지와 컨테이너의 구성과 이들이 어떻게 관리되는지를 이해합니다.
+summary:    도커 이미지 및 컨테이너의 레이어 구성과 관리, 그리고 선택
 categories: docker storage driver
 ---
 

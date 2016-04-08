@@ -129,7 +129,7 @@ p,
 dl,
 ol,
 ul {
-  font-size: 0.85rem;
+  font-size: 16px;
   margin-top: 0;
   margin-bottom: 1rem; }
 
@@ -141,7 +141,7 @@ pre,
 code,
 samp {
   font-family: "Nanum Gothic", "Source Code Pro", Consolas, monospace;
-  font-size: 0.85rem; }
+  font-size: 16px; }
 
 pre {
   margin-top: 0;
@@ -161,32 +161,32 @@ blockquote {
 
 blockquote,
 blockquote p {
-  font-size: 0.85rem;
+  font-size: 16px;
   font-style: italic; }
 
 h1,
 .h1 {
-  font-size: 2.2rem; }
+  font-size: 28px; }
 
 h2,
 .h2 {
-  font-size: 1.5rem; }
+  font-size: 24px; }
 
 h3,
 .h3 {
-  font-size: 1.1rem; }
+  font-size: 20px; }
 
 h4,
 .h4 {
-  font-size: 0.85rem; }
+  font-size: 16px; }
 
 h5,
 .h5 {
-  font-size: 0.78rem; }
+  font-size: 14px; }
 
 h6,
 .h6 {
-  font-size: 0.7rem; }
+  font-size: 12px; }
 
 .list-reset {
   list-style: none;
@@ -414,10 +414,10 @@ hr {
 
 /* Basscss Utility Headings */
 .h00 {
-  font-size: 4rem; }
+  font-size: 11px; }
 
 .h0 {
-  font-size: 3rem; }
+  font-size: 10px; }
 
 @media (min-width: 52em) {
   .h00-responsive {
@@ -850,12 +850,12 @@ sup {
 
 .site-header a {
   color: #333;
-  font-size: 1.1rem;
+  font-size: 20px;
   font-weight: 300;
   background-image: none; }
 
 .site-header .site-title {
-  font-size: 1.5rem; }
+  font-size: 24px; }
 
 .site-nav {
   margin-top: 1rem; }
@@ -1070,7 +1070,7 @@ blockquote footer {
 
   h1,
   .h1 {
-    font-size: 2.2rem; }
+    font-size: 28px; }
 
   .site-header {
     text-align: left; }
@@ -1079,10 +1079,10 @@ blockquote footer {
     margin-top: 0; }
 
   .site-header a {
-    font-size: 0.85rem; }
+    font-size: 16px; }
 
   .site-header .site-title {
-    font-size: 1.1rem;
+    font-size: 20px;
     float: left; }
 
   .site-header .site-nav {
