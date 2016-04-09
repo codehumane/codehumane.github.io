@@ -20,7 +20,7 @@ docker의 storage driver를 파악하기 위해 docker 공식 문서를 살펴�
 
 ![그림이 없는 경우 아래 URL을 참고하세요.](https://docs.docker.com/engine/userguide/storagedriver/images/container-layers.jpg "Container based on the Ubuntu 15.04 image")
 
-그림 1. Container based on the Ubuntu 15.04 image)(출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
+그림 1. Container based on the Ubuntu 15.04 image (출처: [http://goo.gl/DhlZyD](http://goo.gl/DhlZyD))
 
 도커의 storage driver는 바로 이러한 레이어들을 스택으로 관리하고 하나의 단일화된 뷰로 제공하는 역할을 수행한다.
 
@@ -42,7 +42,7 @@ docker의 storage driver를 파악하기 위해 docker 공식 문서를 살펴�
 
 ![](https://docs.docker.com/engine/userguide/storagedriver/images/saving-space.jpg "Image Layer Sharing")
 
-그림 2. Image Layer Sharing (출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
+그림 2. Image Layer Sharing (출처: [http://goo.gl/DhlZyD](http://goo.gl/DhlZyD))
 
 그림에는 changed-ubuntu라는 이름의 이미지와 ubuntu:15.04라는 이름의 이미지가 있는데, changed-ubuntu는 베이스 이미지<sup>base image</sup>를 ubuntu:15.04로 하는 이미지이다. 베이스 이미지가 가진 레이어는 공유를 하고(복사가 아니라), changed-ubuntu의 차이점만을 레이어 스택에 추가하고 있다. changed-ubuntu의 Dockerfile은 다음과 같다.
 
@@ -59,7 +59,7 @@ RUN echo "Hello world" > /tmp/newfile
 
 ![](https://docs.docker.com/engine/userguide/storagedriver/images/sharing-layers.jpg "Container Layer Sharing")
 
-그림 3. Container Layer Sharing (출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
+그림 3. Container Layer Sharing (출처: [http://goo.gl/DhlZyD](http://goo.gl/DhlZyD))
 
 컨테이너는 이미지의 레이어 스택 최상단에 새로운 쓰기 가능한 레이어를 추가하는 형태이므로, 여러개의 컨테이너가 실행되더라도 이미지의 레이어가 공유되어 공간 효율성이 높아진다. 또한, 컨테이너 실행 시 단지 얇고 쓰기 가능한 레이어<sup>thin and writable layer</sup>만 추가하면 되므로 속도도 빠르다(컨테이너 실행 시 마다 매번 이미지의 레이어들을 복사해야 한다고 생각해 보라).
 
@@ -95,7 +95,7 @@ RUN echo "Hello world" > /tmp/newfile
 | VFS*          | right               |
 | ZFS           | zfs                 |
 
-표1. storage driver의 종류 (출처: [docs.docker.com/engine/userguide/storagedriver](docs.docker.com/engine/userguide/storagedriver))
+표1. storage driver의 종류 (출처: [http://goo.gl/DhlZyD](http://goo.gl/DhlZyD))
 
 storage driver는 도커 데몬이 실행될 때 결정되며, 아무것도 지정하지 않은 경우에는 시스템 설정을 기반으로 적절한 것이 선택된다(이 때는 안정성<sup>stability</sup>이 중요한 결정 요소가 된다). 도커의 이미지와 컨테이너의 레이어들을 관리하는 것이 storage driver임을 생각할 때, 데몬 인스턴스에 의해 만들어진 컨테이너들에는 모두 동일한 storage driver가 사용됨을 알 수 있다. 실제로도 그러하다.
 
@@ -172,4 +172,4 @@ storage driver는 도커가 설치될 때 시스템 구성에 따라 적절히 �
 마지막으로, 아래 그림은 각 storage driver의 특성을 비교하는 다이어그램이다. 앞에서 [Jenkins Docker Slave](https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin) 장비의 docker info 내용에서 봤던 경고 메시지처럼, devicemapper (loop)는 production과 performance에서 빨간색 표시(“If bad for use case”를 가리킴)가 되어 있음을 다시 한 번 확인할 수 있다.
 
 ![](https://docs.docker.com/engine/userguide/storagedriver/images/driver-pros-cons.png "storage driver pros and cons")
-- 그림 4. storage driver pros and cons (출처: [docs.docker.com/engine/userguide/storagedriver/selectadriver](docs.docker.com/engine/userguide/storagedriver/selectadriver))
+- 그림 4. storage driver pros and cons (출처: [http://goo.gl/EVJeGI](http://goo.gl/EVJeGI))

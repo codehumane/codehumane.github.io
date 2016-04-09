@@ -837,7 +837,7 @@ p {
 
 small,
 .small {
-  font-size: 0.707rem; }
+  font-size: 14px; }
 
 sup {
   position: relative;
@@ -985,7 +985,7 @@ footer {
   background-color: #fafafa;
   border-top: thin solid #f3f3f3;
   color: #7a7a7a;
-  font-size: 0.75rem;
+  font-size: 14px;
   font-weight: 300;
   padding: 2rem;
   text-align: center; }
