@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Law of Demeter &#8211; codehumane</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="묻지 말고 말하라">
+    <meta name="author" content="Gunhee Cho">
+    <meta name="keywords" content="demeter, 객체지향, oop">
+    <link rel="canonical" href="//demeter/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/07/04/law-of-demeter/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for codehumane" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201604172329" type="text/css">
+
+    <!-- Fonts -->
+    <!-- <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'> -->
+    <!-- <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'> -->
+    <link href='//fonts.googleapis.com/earlyaccess/nanumgothic.css' rel='stylesheet' type='text/css'>
+    
+
+    <!-- MathJax -->
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Law of Demeter">
+    <meta property="og:description" content="소프트웨어 개발 이야기">
+    <meta property="og:url" content="//demeter/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/07/04/law-of-demeter/">
+    <meta property="og:site_name" content="codehumane">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+    <meta name="twitter:title" content="Law of Demeter" />
+    <meta name="twitter:description" content="묻지 말고 말하라" />
+    <meta name="twitter:url" content="//demeter/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/07/04/law-of-demeter/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-76183388-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body class="site">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="/" class="site-title">codehumane</a>
+      <nav class="site-nav">
+        
+    
+
+    
+        <a href="/about/">About</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>Law of Demeter</h1>
+  <span class="post-meta">Jul 4, 2013</span><br>
+  
+  <span class="post-meta small">
+  
+    1 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p><img src="https://alaskabibleteacher.files.wordpress.com/2015/07/train_wreck_at_montparnasse_1895-1895-10-22.jpg?w=423&amp;h=508" alt="" /></p>
+
+<p>벤캣 수브라마니암, 앤디 헌트의 <strong>애자일 프랙틱스</strong>에는 다음과 같은 이야기가 나온다.</p>
+
+<blockquote>
+  <p>다른 객체는 신뢰하지 마. 결국 다른 사람이 작성한 거고, 네가 했더라도 똑똑하다 할 수 없던 지난달에 작성한 거란 말이지. 다른 객체에서 필요한 정보를 얻어서, 스스로 계산하고, 스스로 결정 내려. 다른 객체에 대한 통제력을 포기하지 마!</p>
+</blockquote>
+
+<p>묻지 말고 말하라는 원칙을 설명하는 부분에 앞서, 우리가 쉽게 다른 객체를 의심하며 코드를 작성하는 습관을 꼬집는 이야기이다. 한편, 알렉 샤프(Alec Sharp)는 이렇게 이야기했다.</p>
+
+<blockquote>
+  <p>절차적인 코드는 정보를 얻고 나서 결정을 한다. 객체지향 코드는 객체에게 행동을 하게 한다.</p>
+</blockquote>
+
+<p>우리는 이웃 객체를 호출할 때 해당 객체가 무엇을 원하는지 기술하고, 호출된 객체가 그러한 바를 어떻게 실현할지 결정하게 해야 한다. 이웃 객체의 세부 내용은 우리의 책임이 아니다. 이는 다른 말로, 그리고 좀 더 형식적으로는 디미터의 법칙(Law of Demeter)으로 알려져 있다.</p>
+
+<p>이런 원칙을 따르게 되면, 코드가 좀 더 유연해진다. 이는 호출자가 객체의 내부 구조나 역할 인터페이스 너머에 존재하는 시스템에 대해서 알 필요가 없기 때문이다. 객체가 세부 사항을 모른다는 것은 객체가 변경되어야 할 때 우리가 살펴봐야 하는 범위가 줄어든다는 이야기이다. 다르게 얘기하면, 우리가 객체 외부에서 그 객체와 관련된 결정을 하는 것은 객체의 캡슐화(Encapsulation)를 위반하게 되고 결국 잠재적 결함을 만들게 된다는 이야기이다.</p>
+
+<p>한편 이러한 원칙은 코드의 목적을 한번에 설명할 수 있는 이름이 생기는 추가적 이점을 가져다 준다. 더불어, 관련된 코드를 한 곳에 몰아두어 의도를 드러낼 수 있기도 하다.</p>
+
+<p>이와 관련하여 신문 배달 소년과 지갑이라는 재미있는 이야기도 있다. 소년이 신문 배달을 하러 왔고 비용을 2달러를 지불하라고 했다. 그러자 신문을 받아든 사람은 직접 돈을 지불하는 대신 뒤로 돌아섰고, 소년은 그 사람의 지갑을 꺼내어 2달러를 뺀 후 다시 주머니에 집어 넣었다. 그리고 소년은 반짝이는 재규어를 몰고 다닌다고 한다. 2달러를 지불하는 것은 고객의 책임이지, 소년의 책임이 아니다. 원래의 글은 아래 링크를 참조.</p>
+
+<p><a href="http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf">http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf</a></p>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      <a href="http://github.com/codehumane">Github</a><br>
+      <a href="mailto:codehumane@gmail.com">Email</a>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
