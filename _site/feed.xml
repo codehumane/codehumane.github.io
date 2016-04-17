@@ -7,6 +7,53 @@
     <atom:link href="//feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>SOLID 개요</title>
+        <description>&lt;h2 id=&quot;section&quot;&gt;나쁜 디자인&lt;/h2&gt;
+
+&lt;p&gt;로버트 마틴의 &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgMjdlMWIzNGUtZTQ0NC00ZjQ5LTkwYzQtZjRhMDRlNTQ3ZGMz/view&quot;&gt;The Dependency Inversion Principle 문서&lt;/a&gt;에서는 나쁜 디자인&lt;sup&gt;Bad Design&lt;/sup&gt;을 다음과 같이 정의하고 있다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A piece of software that fulfills its requirements and yet exhibits any or all of the following three traits has a bad design.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;여기서 가리키는 3가지 특성은 다음과 같다.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;ol&gt;
+    &lt;li&gt;It is hard to change because every change affects too many other parts of the system. (Rigidity)&lt;/li&gt;
+    &lt;li&gt;When you make a change, unexpected parts of the system break. (Fragility)&lt;/li&gt;
+    &lt;li&gt;It is hard to reuse in another application because it cannot be disentangled from the current application. (Immobility)&lt;/li&gt;
+  &lt;/ol&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;변경 사항이 발생했을 때 다른 곳에 너무 많은 변경을 가져오거나(경직성&lt;sup&gt;rigidity&lt;/sup&gt;), 예측하지 못한 곳에서 문제가 생길 때(깨지기 쉬움&lt;sup&gt;fragility&lt;/sup&gt;), 혹은 현재 어플리케이션에서 분리해내기 어려워 다른 곳에서 재사용하기 어려운 것(부동성&lt;sup&gt;immobility&lt;/sup&gt;)을 가리킨다.&lt;/p&gt;
+
+&lt;p&gt;여기서 주목할 만한 부분은 “요구사항을 충족하는&lt;sup&gt;fulfills its requirements&lt;/sup&gt;”이다. 아무리 좋은 설계를 가지고 있다고 하더라도 요구사항을 만족시키지 못한다면 가치를 전달할 수 없다. 언제나 잊지 말아야 할 부분이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;객체 지향 설계의 5가지 원칙&lt;/h2&gt;
+
+&lt;p&gt;단지 객체 지향 언어를 쓰는 것만으로는 경직성, 깨지기 쉬움, 부동성을 해결할 수 없다. 객체 지향 언어의 근간이 되는 가치들을 얻기 위해서는 여러 가지 노력이 필요한데, 그 중의 하나가 SOLID이다. 이는 로버트 마틴&lt;sup&gt;Robert Martin&lt;/sup&gt;이 2000년대 초에 명명한 다섯 가지 객체 지향 프로그래밍 및 설계 원칙을 줄여서 부르는 말이다(출처: &lt;a href=&quot;https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)&quot;&gt;https://en.wikipedia.org/wiki/SOLID_(object-oriented_design)&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;로버트 마틴의 &lt;a href=&quot;http://butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod&quot;&gt;OOD 원칙&lt;sup&gt;The Principle of OOD&lt;/sup&gt;&lt;/a&gt;에 따르면 이 다섯 가지 원칙이 특히 OOD의 의존성 관리 측면에 관한 것이라고 한다. 의존성 관리가 약할 경우 코드는 변경하기 어렵고, 깨지기 쉽고, 재사용하기 어렵다. 반대로, 의존성 관리가 잘 되면 코드는 유연&lt;sup&gt;flexible&lt;/sup&gt;하고 강건&lt;sup&gt;robust&lt;/sup&gt;하며, 재사용 하기 쉽다&lt;sup&gt;reusable&lt;/sup&gt;.&lt;/p&gt;
+
+&lt;p&gt;SOLID의 각 요소는 다음과 같다.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;단일 책임 원칙&lt;sup&gt;Single Responsibility Principle&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;개방-폐쇄 원칙&lt;sup&gt;Open/closed principle&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;리스코프 치환 원칙&lt;sup&gt;Liskov substitution principle&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;인터페이스 분리 원칙&lt;sup&gt;Interface segregation principle&lt;/sup&gt;&lt;/li&gt;
+  &lt;li&gt;의존관계 역전 원칙&lt;sup&gt;Dependency inversion principle&lt;/sup&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;이어지는 글에서 하나씩 자세히 살펴보도록 하자.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 18 Apr 2016 07:50:18 +0900</pubDate>
+        <link>//solid/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/ood/2016/04/18/SOLID-%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD/</link>
+        <guid isPermaLink="true">//solid/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/ood/2016/04/18/SOLID-%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD/</guid>
+      </item>
+    
+      <item>
         <title>docker storage driver의 이해</title>
         <description>&lt;p&gt;docker의 storage driver를 파악하기 위해 docker 공식 문서를 살펴보았고 이를 간단한 의견과 함께 요약했다. 참고 문서의 링크는 다음의 2가지이다.&lt;/p&gt;
 
@@ -208,8 +255,8 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 - 그림 4. storage driver pros and cons (출처: &lt;a href=&quot;http://goo.gl/EVJeGI&quot;&gt;http://goo.gl/EVJeGI&lt;/a&gt;)&lt;/p&gt;
 </description>
         <pubDate>Thu, 07 Apr 2016 21:32:18 +0900</pubDate>
-        <link>//docker/storage/driver/2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</link>
-        <guid isPermaLink="true">//docker/storage/driver/2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</guid>
+        <link>//docker/storage/driver/%EB%8F%84%EC%BB%A4/%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84/2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</link>
+        <guid isPermaLink="true">//docker/storage/driver/%EB%8F%84%EC%BB%A4/%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84/2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</guid>
       </item>
     
       <item>
@@ -298,11 +345,10 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 &lt;blockquote&gt;
   &lt;p&gt;If encapsulation was ‘the same thing as information hiding,’ then one might make the argument that ‘everything that was encapsulated was also hidden.’ This is not obviously not true.&lt;/p&gt;
 &lt;/blockquote&gt;
-
 </description>
         <pubDate>Thu, 08 Aug 2013 21:32:18 +0900</pubDate>
-        <link>//encapsulation/information/hiding/2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</link>
-        <guid isPermaLink="true">//encapsulation/information/hiding/2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</guid>
+        <link>//encapsulation/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</link>
+        <guid isPermaLink="true">//encapsulation/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</guid>
       </item>
     
       <item>
@@ -330,11 +376,10 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 &lt;p&gt;이와 관련하여 신문 배달 소년과 지갑이라는 재미있는 이야기도 있다. 소년이 신문 배달을 하러 왔고 비용을 2달러를 지불하라고 했다. 그러자 신문을 받아든 사람은 직접 돈을 지불하는 대신 뒤로 돌아섰고, 소년은 그 사람의 지갑을 꺼내어 2달러를 뺀 후 다시 주머니에 집어 넣었다. 그리고 소년은 반짝이는 재규어를 몰고 다닌다고 한다. 2달러를 지불하는 것은 고객의 책임이지, 소년의 책임이 아니다. 원래의 글은 아래 링크를 참조.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&quot;http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf&quot;&gt;http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf&lt;/a&gt;&lt;/p&gt;
-
 </description>
         <pubDate>Thu, 04 Jul 2013 21:32:18 +0900</pubDate>
-        <link>//demeter/2013/07/04/law-of-demeter/</link>
-        <guid isPermaLink="true">//demeter/2013/07/04/law-of-demeter/</guid>
+        <link>//demeter/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/07/04/law-of-demeter/</link>
+        <guid isPermaLink="true">//demeter/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/07/04/law-of-demeter/</guid>
       </item>
     
       <item>
@@ -376,7 +421,7 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 &lt;p&gt;User.java&lt;/p&gt;
 
 &lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    
+
     &lt;span class=&quot;nd&quot;&gt;@Getter&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
@@ -387,7 +432,7 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;sendFriendRequestTo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;receiver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;// TODO&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-  
+
     &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;isFriendWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;User&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;receiver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
         &lt;span class=&quot;c1&quot;&gt;// TODO&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
@@ -452,7 +497,7 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 
         &lt;span class=&quot;c1&quot;&gt;// When&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;userB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;sendFriendRequestTo&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-       
+
         &lt;span class=&quot;c1&quot;&gt;// Then&lt;/span&gt;
         &lt;span class=&quot;n&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertTrue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;quot;친구 요청을 받으면 친구가 되야 한다.&amp;quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;isFriendWith&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userB&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;));&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
@@ -580,9 +625,9 @@ And ‘B’는 ‘A’와 친구가 된다.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 
     &lt;span class=&quot;c1&quot;&gt;// DB 관련된 사항이 결정되지 않았다고 가정하고 도우미 클래스를 만든다.&lt;/span&gt;
     &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;UserRepository&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        
+
         &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Set&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;User&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        
+
         &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;UserRepository&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
             &lt;span class=&quot;n&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HashSet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;gt;();&lt;/span&gt;
         &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
@@ -643,8 +688,8 @@ And ‘B’는 ‘A’와 친구가 된다.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;그 외에, In-Out 방식과 시나리오 형태로 테스트 주도 개발을 할 수 있다는 점은 BDD(정확히는 JBehave 프레임웍이)가 강제하는 형식이다. 물론, Out-In 방식이 유리한 경우도 있고, 시나리오가 아닌 단순 스펙 확인 방식이 좋은 경우도 있다. BDD 프레임웍이 이런 유연성을 제한하는 것은 분명 한계일 것이다. 그럼에도 불구하고, BDD가 가진 철학들은 한 번은 적용해볼 만한 내용일 것이다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 18 May 2013 21:32:18 +0900</pubDate>
-        <link>//tdd/bdd/2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</link>
-        <guid isPermaLink="true">//tdd/bdd/2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</guid>
+        <link>//tdd/bdd/%EB%8B%A8%EC%9C%84%ED%85%8C%EC%8A%A4%ED%8A%B8/unit/test/2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</link>
+        <guid isPermaLink="true">//tdd/bdd/%EB%8B%A8%EC%9C%84%ED%85%8C%EC%8A%A4%ED%8A%B8/unit/test/2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</guid>
       </item>
     
   </channel>

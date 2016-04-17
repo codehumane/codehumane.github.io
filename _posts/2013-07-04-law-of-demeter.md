@@ -3,7 +3,7 @@ layout:     post
 title:      Law of Demeter
 date:       2013-07-04 12:32:18
 summary:    묻지 말고 말하라
-categories: Demeter
+categories: Demeter 객체지향 OOP
 ---
 
 ![](https://alaskabibleteacher.files.wordpress.com/2015/07/train_wreck_at_montparnasse_1895-1895-10-22.jpg?w=423&h=508)
@@ -25,4 +25,3 @@ categories: Demeter
 이와 관련하여 신문 배달 소년과 지갑이라는 재미있는 이야기도 있다. 소년이 신문 배달을 하러 왔고 비용을 2달러를 지불하라고 했다. 그러자 신문을 받아든 사람은 직접 돈을 지불하는 대신 뒤로 돌아섰고, 소년은 그 사람의 지갑을 꺼내어 2달러를 뺀 후 다시 주머니에 집어 넣었다. 그리고 소년은 반짝이는 재규어를 몰고 다닌다고 한다. 2달러를 지불하는 것은 고객의 책임이지, 소년의 책임이 아니다. 원래의 글은 아래 링크를 참조.
 
 [http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf](http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf)
-
