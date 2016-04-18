@@ -8,7 +8,9 @@
     
       <item>
         <title>SOLID 개요</title>
-        <description>&lt;h2 id=&quot;section&quot;&gt;나쁜 디자인&lt;/h2&gt;
+        <description>&lt;p&gt;SOLID의 구체적인 이야기에 앞서 나쁜 디자인은 무엇이고, SOLID는 어떤 문제를 해결하려 하는지 살펴보도록 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;나쁜 디자인&lt;/h2&gt;
 
 &lt;p&gt;로버트 마틴의 &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgMjdlMWIzNGUtZTQ0NC00ZjQ5LTkwYzQtZjRhMDRlNTQ3ZGMz/view&quot;&gt;The Dependency Inversion Principle 문서&lt;/a&gt;에서는 나쁜 디자인&lt;sup&gt;Bad Design&lt;/sup&gt;을 다음과 같이 정의하고 있다.&lt;/p&gt;
 
@@ -48,9 +50,9 @@
 
 &lt;p&gt;이어지는 글에서 하나씩 자세히 살펴보도록 하자.&lt;/p&gt;
 </description>
-        <pubDate>Mon, 18 Apr 2016 07:50:18 +0900</pubDate>
-        <link>//solid/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/ood/2016/04/18/SOLID-%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD/</link>
-        <guid isPermaLink="true">//solid/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/ood/2016/04/18/SOLID-%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD/</guid>
+        <pubDate>Sun, 17 Apr 2016 21:32:18 +0900</pubDate>
+        <link>//2016/04/17/SOLID-%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD/</link>
+        <guid isPermaLink="true">//2016/04/17/SOLID-%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD/</guid>
       </item>
     
       <item>
@@ -255,8 +257,8 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 - 그림 4. storage driver pros and cons (출처: &lt;a href=&quot;http://goo.gl/EVJeGI&quot;&gt;http://goo.gl/EVJeGI&lt;/a&gt;)&lt;/p&gt;
 </description>
         <pubDate>Thu, 07 Apr 2016 21:32:18 +0900</pubDate>
-        <link>//docker/storage/driver/%EB%8F%84%EC%BB%A4/%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84/2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</link>
-        <guid isPermaLink="true">//docker/storage/driver/%EB%8F%84%EC%BB%A4/%EC%8A%A4%ED%86%A0%EB%A6%AC%EC%A7%80/%EB%93%9C%EB%9D%BC%EC%9D%B4%EB%B2%84/2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</guid>
+        <link>//2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</link>
+        <guid isPermaLink="true">//2016/04/07/docker-storage-driver%E1%84%8B%E1%85%B4-%E1%84%8B%E1%85%B5%E1%84%92%E1%85%A2/</guid>
       </item>
     
       <item>
@@ -347,8 +349,8 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 &lt;/blockquote&gt;
 </description>
         <pubDate>Thu, 08 Aug 2013 21:32:18 +0900</pubDate>
-        <link>//encapsulation/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</link>
-        <guid isPermaLink="true">//encapsulation/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</guid>
+        <link>//2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</link>
+        <guid isPermaLink="true">//2013/08/08/%E1%84%8F%E1%85%A2%E1%86%B8%E1%84%89%E1%85%B2%E1%86%AF%E1%84%92%E1%85%AA%E1%84%8B%E1%85%AA-%E1%84%8C%E1%85%A5%E1%86%BC%E1%84%87%E1%85%A9%E1%84%8B%E1%85%B3%E1%86%AB%E1%84%82%E1%85%B5%E1%86%A8/</guid>
       </item>
     
       <item>
@@ -378,8 +380,8 @@ WARNING: bridge-nf-call-ip6tables is disabled&lt;/code&gt;&lt;/pre&gt;&lt;/div&g
 &lt;p&gt;&lt;a href=&quot;http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf&quot;&gt;http://www.ccs.neu.edu/research/demeter/demeter-method/LawOfDemeter/paper-boy/demeter.pdf&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 04 Jul 2013 21:32:18 +0900</pubDate>
-        <link>//demeter/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/07/04/law-of-demeter/</link>
-        <guid isPermaLink="true">//demeter/%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/oop/2013/07/04/law-of-demeter/</guid>
+        <link>//2013/07/04/law-of-demeter/</link>
+        <guid isPermaLink="true">//2013/07/04/law-of-demeter/</guid>
       </item>
     
       <item>
@@ -688,8 +690,8 @@ And ‘B’는 ‘A’와 친구가 된다.&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;그 외에, In-Out 방식과 시나리오 형태로 테스트 주도 개발을 할 수 있다는 점은 BDD(정확히는 JBehave 프레임웍이)가 강제하는 형식이다. 물론, Out-In 방식이 유리한 경우도 있고, 시나리오가 아닌 단순 스펙 확인 방식이 좋은 경우도 있다. BDD 프레임웍이 이런 유연성을 제한하는 것은 분명 한계일 것이다. 그럼에도 불구하고, BDD가 가진 철학들은 한 번은 적용해볼 만한 내용일 것이다.&lt;/p&gt;
 </description>
         <pubDate>Sat, 18 May 2013 21:32:18 +0900</pubDate>
-        <link>//tdd/bdd/%EB%8B%A8%EC%9C%84%ED%85%8C%EC%8A%A4%ED%8A%B8/unit/test/2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</link>
-        <guid isPermaLink="true">//tdd/bdd/%EB%8B%A8%EC%9C%84%ED%85%8C%EC%8A%A4%ED%8A%B8/unit/test/2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</guid>
+        <link>//2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</link>
+        <guid isPermaLink="true">//2013/05/18/TDD%E1%84%8B%E1%85%AA-BDD%E1%84%8B%E1%85%B4-%E1%84%8E%E1%85%A1%E1%84%8B%E1%85%B5/</guid>
       </item>
     
   </channel>

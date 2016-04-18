@@ -3,7 +3,6 @@ layout:     post
 title:      Law of Demeter
 date:       2013-07-04 12:32:18
 summary:    묻지 말고 말하라
-categories: Demeter 객체지향 OOP
 ---
 
 ![](https://alaskabibleteacher.files.wordpress.com/2015/07/train_wreck_at_montparnasse_1895-1895-10-22.jpg?w=423&h=508)
