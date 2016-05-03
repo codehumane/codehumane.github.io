@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for codehumane" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201604182017" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201605031937" type="text/css">
 
     <!-- Fonts -->
     <!-- <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'> -->
@@ -180,8 +180,8 @@
 
 <p>그림에는 changed-ubuntu라는 이름의 이미지와 ubuntu:15.04라는 이름의 이미지가 있는데, changed-ubuntu는 베이스 이미지<sup>base image</sup>를 ubuntu:15.04로 하는 이미지이다. 베이스 이미지가 가진 레이어는 공유를 하고(복사가 아니라), changed-ubuntu의 차이점만을 레이어 스택에 추가하고 있다. changed-ubuntu의 Dockerfile은 다음과 같다.</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">FROM ubuntu:15.04
-RUN echo &quot;Hello world&quot; &gt; /tmp/newfile</code></pre></div>
+<figure class="highlight"><pre><code class="language-html" data-lang="html">FROM ubuntu:15.04
+RUN echo "Hello world" &gt; /tmp/newfile</code></pre></figure>
 
 <p>즉, changed-ubuntu의 레이어인 94e6b7d2c720는 RUN 수행 부분임을 알 수 있다. 참고로, 이러한 디스크 효율성은 이미지 빌드 시의 속도 향상으로 나타나기도 한다. Dockerfile의 문장들을 일일이 수행하는 게 아니라, 이미 존재하는 레이어가 있다면 이를 그대로 공유하도록 하는 것이다.</p>
 
@@ -266,7 +266,7 @@ RUN echo &quot;Hello world&quot; &gt; /tmp/newfile</code></pre></div>
 
 <p>자신이 쓰고 있는 storage driver가 무엇인지 확인하려면 docker info 명령을 입력하면 된다.</p>
 
-<div class="highlight"><pre><code class="language-html" data-lang="html">[dockeradmin@build-slave containers]# docker info
+<figure class="highlight"><pre><code class="language-html" data-lang="html">[dockeradmin@build-slave containers]# docker info
 Containers: 1
  Running: 1
  Paused: 0
@@ -308,12 +308,12 @@ Total Memory: 15.67 GiB
 Name: do-build-slave.terracetech.co.kr
 ID: NHFZ:QP7R:NJPP:R7CA:3Q4F:7O7F:KO3V:SFSA:LPXF:XBCA:ZTYT:P37I
 WARNING: bridge-nf-call-iptables is disabled
-WARNING: bridge-nf-call-ip6tables is disabled</code></pre></div>
+WARNING: bridge-nf-call-ip6tables is disabled</code></pre></figure>
 
 <p>위 정보는 현재 Jenkins의 <a href="https://wiki.jenkins-ci.org/display/JENKINS/Docker+Plugin">Docker Slave</a>로 활용하는 장비에 대한 것이다. 살펴보면 storage driver는 devicemapper, 파일 시스템은 xfs임을 알 수 있다. 한가지 주목할 만한 것은 WARNING 메시지이다.</p>
 
 <blockquote>
-  <p>WARNING: Usage of loopback devices is strongly discouraged for production use. Either use <code>--storage-opt dm.thinpooldev</code> or use <code>--storage-opt dm.no_warn_on_loop_devices=true</code> to suppress this warning.</p>
+  <p>WARNING: Usage of loopback devices is strongly discouraged for production use. Either use <code class="highlighter-rouge">--storage-opt dm.thinpooldev</code> or use <code class="highlighter-rouge">--storage-opt dm.no_warn_on_loop_devices=true</code> to suppress this warning.</p>
 </blockquote>
 
 <p>프로덕션 환경에서 사용하지 않기를 강하게 권장<sup>strongly discouraged</sup>한다는 것인데, 다른 대안을 찾는 법에 대해서는 바로 다음에서 설명한다.</p>

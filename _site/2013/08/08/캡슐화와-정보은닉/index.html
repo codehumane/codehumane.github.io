@@ -12,7 +12,7 @@
     <link rel="alternate" type="application/rss+xml" title="RSS Feed for codehumane" href="/feed.xml" />
 
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/pixyll.css?201604182017" type="text/css">
+    <link rel="stylesheet" href="/css/pixyll.css?201605031937" type="text/css">
 
     <!-- Fonts -->
     <!-- <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'> -->
@@ -188,21 +188,21 @@
 
 <p>먼저 첫 번째 예제는 정보 은닉은 되지 않았지만, 캡슐화는 되어 있는 코드이다. 좌표를 표현하기 위한 개념인 x와 y를 모아두었지만, 이것이 외부에게 노출되어 있다.</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Point</span> <span class="o">{</span>
     <span class="kd">public</span> <span class="kt">double</span> <span class="n">x</span><span class="o">;</span>
     <span class="kd">public</span> <span class="kt">double</span> <span class="n">y</span><span class="o">;</span>
-<span class="o">}</span></code></pre></div>
+<span class="o">}</span></code></pre></figure>
 
 <p>두 번째 예제는 이렇게 잘 모아진 개념을 적절하게 숨겼고, x와 y좌표를 잘못 사용할 수 있는 가능성을 줄였으며, 어떻게 사용하는지 이해하기 쉽게 가독성을 높인 예제이다.</p>
 
-<div class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Point</span> <span class="o">{</span>
-    <span class="kt">double</span> <span class="nf">GetX</span><span class="o">();</span>
-    <span class="kt">double</span> <span class="nf">GetY</span><span class="o">();</span>
-    <span class="kt">void</span> <span class="nf">SetCartesian</span><span class="o">(</span><span class="kt">double</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span> <span class="n">y</span><span class="o">);</span>
-    <span class="kt">double</span> <span class="nf">GetR</span><span class="o">();</span>
-    <span class="kt">double</span> <span class="nf">GetTheta</span><span class="o">();</span>
-    <span class="kt">void</span> <span class="nf">SetPolar</span><span class="o">(</span><span class="kt">double</span> <span class="n">r</span><span class="o">,</span> <span class="kt">double</span> <span class="n">theta</span><span class="o">);</span>
-<span class="o">}</span></code></pre></div>
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Point</span> <span class="o">{</span>
+    <span class="kt">double</span> <span class="n">GetX</span><span class="o">();</span>
+    <span class="kt">double</span> <span class="n">GetY</span><span class="o">();</span>
+    <span class="kt">void</span> <span class="n">SetCartesian</span><span class="o">(</span><span class="kt">double</span> <span class="n">x</span><span class="o">,</span> <span class="kt">double</span> <span class="n">y</span><span class="o">);</span>
+    <span class="kt">double</span> <span class="n">GetR</span><span class="o">();</span>
+    <span class="kt">double</span> <span class="n">GetTheta</span><span class="o">();</span>
+    <span class="kt">void</span> <span class="n">SetPolar</span><span class="o">(</span><span class="kt">double</span> <span class="n">r</span><span class="o">,</span> <span class="kt">double</span> <span class="n">theta</span><span class="o">);</span>
+<span class="o">}</span></code></pre></figure>
 
 <h2 id="section-2">그래서?</h2>
 
