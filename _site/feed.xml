@@ -22,7 +22,7 @@
 
 &lt;p&gt;책임이 분리되어야 하는 이유를 간단한 예제로 함께 설명해 보도록 하자.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/SOLID-그림1-한-가지-이상의-책임.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/단일-책임-원칙-SPR/그림1-한-가지-이상의-책임.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;그림 1. 한 가지 이상의 책임 (출처: &lt;a href=&quot;https://goo.gl/HbixP9&quot;&gt;https://goo.gl/HbixP9&lt;/a&gt;)&lt;/p&gt;
 
@@ -35,7 +35,7 @@
 
 &lt;p&gt;왜 ComputationalGeometryApplication는 GUI를 사용하지도 않는데 GUI를 포함해야 할까? 또, ComputationalGeometryApplication와 상관 없는 기능으로 Rectangle이 변경되었는데 왜 다시 테스트를 받아야 하는가? 테스트해야 한다는 사실을 모를 경우 예상치 못한 문제가 생길 수도 있는 노릇이다. 불필요한 의존성은 예상치 못한 비용을 불러온다.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/SOLID-그림2-분리된-책임.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/단일-책임-원칙-SPR/그림2-분리된-책임.jpeg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;그림 2. 분리된 책임 (출처: &lt;a href=&quot;https://goo.gl/HbixP9&quot;&gt;https://goo.gl/HbixP9&lt;/a&gt;)&lt;/p&gt;
 
