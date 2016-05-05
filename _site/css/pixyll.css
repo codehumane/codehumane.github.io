@@ -626,6 +626,18 @@ html, body {
 img {
   max-width: 100%; }
 
+img[alt=three] {
+  width: 300px; }
+
+img[alt=four] {
+  width: 400px; }
+
+img[alt=five] {
+  width: 500px; }
+
+img[alt=six] {
+  width: 600px; }
+
 em img {
   max-width: 100%;
   margin-left: 0; }
