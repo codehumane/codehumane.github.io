@@ -626,6 +626,12 @@ html, body {
 img {
   max-width: 100%; }
 
+img[alt=one] {
+  width: 100px; }
+
+img[alt=two] {
+  width: 200px; }
+
 img[alt=three] {
   width: 300px; }
 

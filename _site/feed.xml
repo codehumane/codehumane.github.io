@@ -7,6 +7,84 @@
     <atom:link href="//feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>리스코프 치환 원칙 (LSP)</title>
+        <description>&lt;p&gt;SOLID의 세 번째 원칙인 리스코프 치환 원칙Liskov substitution principle에 대해 알아보도록 한다.&lt;/p&gt;
+
+&lt;h2 id=&quot;section&quot;&gt;리스코프 치환 원칙이란?&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;“FUNCTIONS THAT USE POINTERS OR REFERENCES TO BASE CLASSES MUST BE ABLE TO USE OBJECTS OF DERIVED CLASSES WITHOUT KNOWING IT.”&lt;/p&gt;
+
+  &lt;p&gt;– &lt;cite&gt;Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgNzAzZjA5ZmItNjU3NS00MzQ5LTkwYjMtMDJhNDU5ZTM0MTlh/view&quot;&gt;LSP: The Liskov Substitution Principle&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;기반 클래스&lt;sup&gt;base class&lt;/sup&gt;의 사용자는 그 기반 클래스의 파생 클래스&lt;sup&gt;derived class&lt;/sup&gt;들에 대해 알 필요가 없다는 이야기이다. LSP를 위반한다는 것은 기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는 것이다. 이런 코드는 파생 클래스들이 추가될 때 마다 수정될 가능성이 높다. 즉, 수정에 닫혀 있지 못한 OCP 위반이 된다.&lt;/p&gt;
+
+&lt;p&gt;이를 설명하는 여러 예제가 있지만 사각형과 정사각형 이야기가 가장 흥미롭다. 아래 그림을 먼저 보도록 하자.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/리스코프-치환-원칙-LSP/그림1-ISA.png&quot; alt=&quot;two&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;그림 1. 사각형을 상속하는 정사각형&lt;/p&gt;
+
+&lt;p&gt;‘정사각형은 사각형이다’라고 할 수 있으므로 &lt;a href=&quot;https://en.wikipedia.org/wiki/Is-a&quot;&gt;ISA 관계&lt;/a&gt;가 성립하는 것 처럼 보인다. 따라서 그림의 상속 관계도 자연스러워 보인다. 하지만 코드와 함께 살펴 보면 이상한 부분들이 보이기 시작한다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Rectangle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+   &lt;span class=&quot;nd&quot;&gt;@Getter&lt;/span&gt;
+   &lt;span class=&quot;nd&quot;&gt;@Setter&lt;/span&gt;
+   &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+   &lt;span class=&quot;nd&quot;&gt;@Getter&lt;/span&gt;
+   &lt;span class=&quot;nd&quot;&gt;@Setter&lt;/span&gt;
+   &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Square&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rectangle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;위 코드는 넓이와 높이 속성을 가진 &lt;i&gt;Rectangle&lt;/i&gt;을 &lt;i&gt;Square&lt;/i&gt;가 상속하도록 만든 코드이다. 그런데, &lt;i&gt;Square&lt;/i&gt;가 상속하는 두 필드가 모두 필요한 걸까? 정사각형은 넓이와 높이가 동일하므로 하나의 필드만으로 충분하기 때문이다. 이렇게 되면 &lt;i&gt;Square&lt;/i&gt; 인스턴스가 생성될 때 마다 불필요한 메모리를 사용하는 등 여러 가지 비용들이 발생한다. 게다가 코드를 읽는 사람에게 혼란을 주기도 한다. “정사각형은 가로 세로가 동일한데 왜 넓이와 높이를 지정하는 메서드가 각각 존재하는 건가?” 혹여나 정사각형의 특성을 만족시키기 위해 &lt;i&gt;setWidth&lt;/i&gt;와 &lt;i&gt;setHeight&lt;/i&gt;를 오버라이드 해서 각 메서드 호출 시 마다 &lt;i&gt;width&lt;/i&gt;와 &lt;i&gt;height&lt;/i&gt;를 항상 동일하게 맞춰준다고 해도 혼란은 여전할 것이다. 아래 코드 처럼 말이다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;inconsistency&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rectangle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setWidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;area&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getWidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;area&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;메모리 비효율과 혼란을 무시한다고 해도 다른 문제가 남아 있다. &lt;i&gt;Rectangle&lt;/i&gt;의 사용자가 &lt;i&gt;Square&lt;/i&gt;의 존재를 알아야 한다는 것이다. 이 경우 다음과 같은 코드가 만들어 질 수 있다.&lt;/p&gt;
+
+&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ocpViolation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rectangle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+   &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setWidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+
+   &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;area&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getWidth&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;instanceof&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Square&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+       &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;area&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+       &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;area&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+
+&lt;p&gt;&lt;i&gt;ocpViolation&lt;/i&gt; 메서드는 &lt;i&gt;Rectangle&lt;/i&gt; 객체를 참조하고 있지만 이 객체가 &lt;i&gt;Square&lt;/i&gt;(Rectangle의 파생 클래스)의 객체일 때는 기대한 대로 동작하지 않는다. 위의 코드 처럼 별도의 처리가 필요하게 되고, 결국 ‘기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는’ LSP 위반이 된다. 이런 식으로 &lt;i&gt;Rectangle&lt;/i&gt;의 파생 클래스가 추가 되면 이 함수도 함께 수정해 주어야 하므로 OCP를 위반하게 된다.&lt;/p&gt;
+
+&lt;p&gt;결국 LSP는 OCP를 따르기 위한 수단으로 보여지기도 한다. 파생 클래스들은 언제든지 기반 클래스로 치환&lt;sup&gt;substitution&lt;/sup&gt; 될 수 있어야 하며, 그러기 위해서 모든 파생 클래스들은 기반 클래스의 클라이언트 코드들이 기반 클래스에게 기대하는 것을 반드시 따라야만 한다. 이를 통해 기반 클래스들에 의존하는 코드들이 재사용 가능해지고 기반 클래스들의 변경에 영향 받지 않을 수 있게 된다. 이는 OCP가 추구하는 바 그대로이다.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-1&quot;&gt;정사각형은 사각형인가?&lt;/h2&gt;
+
+&lt;p&gt;정사각형은 사각형이 맞다. 하지만 &lt;i&gt;Square&lt;/i&gt;와 &lt;i&gt;Rectangle&lt;/i&gt; 클래스는 ISA 관계가 성립하지 않는다. &lt;i&gt;Square&lt;/i&gt; 객체의 행위가 &lt;i&gt;Rectangle&lt;/i&gt;의 그것과 상이하기 때문이다. &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/java/concepts/object.html&quot;&gt;상태와 행위를 가지는 것이 객체&lt;/a&gt;이고 &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/java/concepts/class.html&quot;&gt;클래스는 이 객체의 행위를 구현한 템플릿&lt;sup&gt;template&lt;/sup&gt;&lt;/a&gt; 임을 생각할 때 &lt;i&gt;Square&lt;/i&gt;는 &lt;i&gt;Rectangle&lt;/i&gt;이 아니다.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;참고 문헌&lt;/h2&gt;
+
+&lt;p&gt;[1] Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgNzAzZjA5ZmItNjU3NS00MzQ5LTkwYjMtMDJhNDU5ZTM0MTlh/view&quot;&gt;LSP: The Liskov Substitution Principle.&lt;/a&gt; &lt;br /&gt;
+[2] &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/java/concepts/object.html&quot;&gt;What is Object?&lt;/a&gt; &lt;br /&gt;
+[3] &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/java/concepts/class.html&quot;&gt;What is Class?&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 03 Jun 2016 05:01:18 +0900</pubDate>
+        <link>//2016/06/03/%E1%84%85%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%91%E1%85%B3-%E1%84%8E%E1%85%B5%E1%84%92%E1%85%AA%E1%86%AB-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/</link>
+        <guid isPermaLink="true">//2016/06/03/%E1%84%85%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%91%E1%85%B3-%E1%84%8E%E1%85%B5%E1%84%92%E1%85%AA%E1%86%AB-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/</guid>
+      </item>
+    
+      <item>
         <title>개방 폐쇄 원칙 (OCP)</title>
         <description>&lt;p&gt;SOLID 두 번째 단어인 개방 폐쇄 원칙&lt;sup&gt;Open-Closed Principle&lt;/sup&gt;에 대해 알아보도록 하자.&lt;/p&gt;
 
@@ -139,8 +217,8 @@
 &lt;p&gt;만약 Shape의 타입과 상관 없는 정렬을 지원해야 한다면 어떨까? 닫힘에 대해 좀 더 생각해 볼 이슈라면서 로버트 마틴이 던지는 질문이다. 다만, OrderedObject라는 추상화(OrderedShape이라는 클래스가 Shape과 OrderedShape로부터 파생)를 이용하라고 한다. 코드나 다이어그램 등 더 이상의 설명은 없어 정확히 예측은 어렵지만, 개인적으로 이런 코드를 이야기하고 있는 게 아닌가 싶다. 작성된 코드는 아래 링크에서 확인할 수 있다.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/codehumane/codehumane/tree/master/design-java/src/main/java/solid/ocp/more&quot;&gt;https://github.com/codehumane/codehumane/tree/master/design-java/src/main/java/solid/ocp/more&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://github.com/codehumane/codehumane/blob/master/design-java/src/test/java/solid/ocp/more/Client.java&quot;&gt;https://github.com/codehumane/codehumane/blob/master/design-java/src/test/java/solid/ocp/more/Client.java&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/codehumane/codehumane/tree/master/design-java/src/main/java/solid/ocp/more&quot;&gt;Shape 타입과 상관 없는 대상에 대해서도 정렬 지원&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://github.com/codehumane/codehumane/blob/master/design-java/src/test/java/solid/ocp/more/Client.java&quot;&gt;작성된 모듈을 사용하는 클라이언트 코드&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;h2 id=&quot;section-3&quot;&gt;생각해 볼 거리&lt;/h2&gt;
