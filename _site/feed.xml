@@ -8,7 +8,7 @@
     
       <item>
         <title>리스코프 치환 원칙 (LSP)</title>
-        <description>&lt;p&gt;SOLID의 세 번째 원칙인 리스코프 치환 원칙Liskov substitution principle에 대해 알아보도록 한다.&lt;/p&gt;
+        <description>&lt;p&gt;SOLID의 세 번째 원칙인 리스코프 치환 원칙&lt;sup&gt;Liskov substitution principle&lt;/sup&gt;에 대해 알아보도록 한다.&lt;/p&gt;
 
 &lt;h2 id=&quot;section&quot;&gt;리스코프 치환 원칙이란?&lt;/h2&gt;
 
@@ -18,7 +18,7 @@
   &lt;p&gt;– &lt;cite&gt;Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgNzAzZjA5ZmItNjU3NS00MzQ5LTkwYjMtMDJhNDU5ZTM0MTlh/view&quot;&gt;LSP: The Liskov Substitution Principle&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;기반 클래스&lt;sup&gt;base class&lt;/sup&gt;의 사용자는 그 기반 클래스의 파생 클래스&lt;sup&gt;derived class&lt;/sup&gt;들에 대해 알 필요가 없다는 이야기이다. LSP를 위반한다는 것은 기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는 것이다. 이런 코드는 파생 클래스들이 추가될 때 마다 수정될 가능성이 높다. 즉, 수정에 닫혀 있지 못한 OCP 위반이 된다.&lt;/p&gt;
+&lt;p&gt;기반 클래스&lt;sup&gt;base class&lt;/sup&gt;의 사용자는 파생 클래스&lt;sup&gt;derived class&lt;/sup&gt;의 존재를 몰라도 기반 클래스를 사용할 수 있어야 한다. LSP를 위반한다는 것은 기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는 것이다. 이런 코드는 파생 클래스들이 추가될 때 마다 수정될 가능성이 높다. 즉, 수정에 닫혀 있지 못한 OCP 위반이 된다.&lt;/p&gt;
 
 &lt;p&gt;이를 설명하는 여러 예제가 있지만 사각형과 정사각형 이야기가 가장 흥미롭다. 아래 그림을 먼저 보도록 하자.&lt;/p&gt;
 
@@ -42,7 +42,7 @@
 
 &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Square&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Rectangle&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;위 코드는 넓이와 높이 속성을 가진 &lt;i&gt;Rectangle&lt;/i&gt;을 &lt;i&gt;Square&lt;/i&gt;가 상속하도록 만든 코드이다. 그런데, &lt;i&gt;Square&lt;/i&gt;가 상속하는 두 필드가 모두 필요한 걸까? 정사각형은 넓이와 높이가 동일하므로 하나의 필드만으로 충분하기 때문이다. 이렇게 되면 &lt;i&gt;Square&lt;/i&gt; 인스턴스가 생성될 때 마다 불필요한 메모리를 사용하는 등 여러 가지 비용들이 발생한다. 게다가 코드를 읽는 사람에게 혼란을 주기도 한다. “정사각형은 가로 세로가 동일한데 왜 넓이와 높이를 지정하는 메서드가 각각 존재하는 건가?” 혹여나 정사각형의 특성을 만족시키기 위해 &lt;i&gt;setWidth&lt;/i&gt;와 &lt;i&gt;setHeight&lt;/i&gt;를 오버라이드 해서 각 메서드 호출 시 마다 &lt;i&gt;width&lt;/i&gt;와 &lt;i&gt;height&lt;/i&gt;를 항상 동일하게 맞춰준다고 해도 혼란은 여전할 것이다. 아래 코드 처럼 말이다.&lt;/p&gt;
+&lt;p&gt;위 코드는 넓이와 높이 속성을 가진 &lt;i&gt;Rectangle&lt;/i&gt;을 &lt;i&gt;Square&lt;/i&gt;가 상속하도록 하고 있다. 그런데, &lt;i&gt;Square&lt;/i&gt;가 상속하는 속성과 행위가 모두 필요한 걸까? 정사각형은 넓이와 높이가 동일하기 때문에 이는 생각해 볼 일이다. 우선 메모리 사용 측면에서 비효율이다. &lt;i&gt;Square&lt;/i&gt; 인스턴스가 생성될 때 마다 매번 2개 필드를 위한 메모리가 사용되기 때문이다. 두 번째로, 코드를 읽는 사람에게 혼란을 야기할 수 있다. “정사각형은 가로 세로가 동일한데 왜 필드가 2개이고 넓이와 높이를 지정하는 메서드가 각각 존재하는 건가?” 자칫 &lt;i&gt;width&lt;/i&gt;와 &lt;i&gt;height&lt;/i&gt;가 서로 달라지는 오류를 범할 수도 있다. &lt;i&gt;setWidth&lt;/i&gt;와 &lt;i&gt;setHeight&lt;/i&gt;를 오버라이드 해서 각 메서드 호출 시 마다 &lt;i&gt;width&lt;/i&gt;와 &lt;i&gt;height&lt;/i&gt;를 항상 동일하게 맞춰준다고 해도 코드의 사용자에게 주는 혼란은 여전하다. 아래 코드 처럼 말이다.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;inconsistency&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rectangle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
    &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
@@ -51,7 +51,7 @@
    &lt;span class=&quot;k&quot;&gt;assert&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;area&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;50&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;메모리 비효율과 혼란을 무시한다고 해도 다른 문제가 남아 있다. &lt;i&gt;Rectangle&lt;/i&gt;의 사용자가 &lt;i&gt;Square&lt;/i&gt;의 존재를 알아야 한다는 것이다. 이 경우 다음과 같은 코드가 만들어 질 수 있다.&lt;/p&gt;
+&lt;p&gt;메모리 비효율과 읽기 혼란을 무시한다고 해도 다른 문제가 남아 있다. &lt;i&gt;Rectangle&lt;/i&gt;의 사용자가 &lt;i&gt;Square&lt;/i&gt;의 존재를 알아야 한다는 것이다. 이 경우 다음과 같은 코드가 만들어 질 수 있다.&lt;/p&gt;
 
 &lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;ocpViolation&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Rectangle&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
    &lt;span class=&quot;n&quot;&gt;rectangle&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setHeight&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
@@ -65,9 +65,9 @@
    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
 
-&lt;p&gt;&lt;i&gt;ocpViolation&lt;/i&gt; 메서드는 &lt;i&gt;Rectangle&lt;/i&gt; 객체를 참조하고 있지만 이 객체가 &lt;i&gt;Square&lt;/i&gt;(Rectangle의 파생 클래스)의 객체일 때는 기대한 대로 동작하지 않는다. 위의 코드 처럼 별도의 처리가 필요하게 되고, 결국 ‘기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는’ LSP 위반이 된다. 이런 식으로 &lt;i&gt;Rectangle&lt;/i&gt;의 파생 클래스가 추가 되면 이 함수도 함께 수정해 주어야 하므로 OCP를 위반하게 된다.&lt;/p&gt;
+&lt;p&gt;기존의 &lt;i&gt;inconsistency&lt;/i&gt; 메서드는 &lt;i&gt;Rectangle&lt;/i&gt; 객체를 참조하고 있지만 이 객체가 &lt;i&gt;Square&lt;/i&gt;(&lt;i&gt;Rectangle&lt;/i&gt;의 파생 클래스)의 객체일 때는 기대한 대로 동작하지 않는다. 그래서 &lt;i&gt;ocpViolation&lt;/i&gt; 메서드 처럼 별도의 처리가 필요하게 되고, 결국 ‘기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는’ LSP 위반이 된다. 이런 식의 &lt;i&gt;Rectangle&lt;/i&gt; 파생 클래스가 추가될 때 마다 ocpViolation도 함께 수정해 주어야 하므로 OCP를 위반하게 된다.&lt;/p&gt;
 
-&lt;p&gt;결국 LSP는 OCP를 따르기 위한 수단으로 보여지기도 한다. 파생 클래스들은 언제든지 기반 클래스로 치환&lt;sup&gt;substitution&lt;/sup&gt; 될 수 있어야 하며, 그러기 위해서 모든 파생 클래스들은 기반 클래스의 클라이언트 코드들이 기반 클래스에게 기대하는 것을 반드시 따라야만 한다. 이를 통해 기반 클래스들에 의존하는 코드들이 재사용 가능해지고 기반 클래스들의 변경에 영향 받지 않을 수 있게 된다. 이는 OCP가 추구하는 바 그대로이다.&lt;/p&gt;
+&lt;p&gt;파생 클래스들은 언제든지 기반 클래스로 치환&lt;sup&gt;substitution&lt;/sup&gt; 될 수 있어야 하며, 그러기 위해서 모든 파생 클래스들은 기반 클래스의 클라이언트 코드들이 기반 클래스에게 기대하는 것을 반드시 따라야만 한다. 이를 통해 기반 클래스들에 의존하는 코드들이 재사용 가능해지고 기반 클래스들의 변경에 영향 받지 않을 수 있게 된다. 이는 OCP가 추구하는 바 그대로이며, 이런 측면에서 LSP는 OCP를 따르기 위한 수단으로 보여지기도 한다.&lt;/p&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;정사각형은 사각형인가?&lt;/h2&gt;
 
