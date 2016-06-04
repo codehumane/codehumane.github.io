@@ -78,6 +78,13 @@
 &lt;p&gt;[1] Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgNzAzZjA5ZmItNjU3NS00MzQ5LTkwYjMtMDJhNDU5ZTM0MTlh/view&quot;&gt;LSP: The Liskov Substitution Principle.&lt;/a&gt; &lt;br /&gt;
 [2] &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/java/concepts/object.html&quot;&gt;What is Object?&lt;/a&gt; &lt;br /&gt;
 [3] &lt;a href=&quot;https://docs.oracle.com/javase/tutorial/java/concepts/class.html&quot;&gt;What is Class?&lt;/a&gt; &lt;br /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-3&quot;&gt;관련 문서&lt;/h2&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;/2016/04/17/SOLID-개요&quot;&gt;SOLID 개요&lt;/a&gt;&lt;br /&gt;
+[2] &lt;a href=&quot;/2016/05/01/단일-책임-원칙&quot;&gt;단일 책임 원칙 SRP&lt;/a&gt;&lt;br /&gt;
+[3] &lt;a href=&quot;/2016/05/04/개방-폐쇄-원칙&quot;&gt;개방 폐쇄 법칙 OCP&lt;/a&gt;&lt;br /&gt;
+[4] &lt;a href=&quot;/2016/06/03/리스코프-치환-원칙&quot;&gt;리스코프 치환 법칙 LSP&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
 </description>
         <pubDate>Fri, 03 Jun 2016 05:01:18 +0900</pubDate>
         <link>//2016/06/03/%E1%84%85%E1%85%B5%E1%84%89%E1%85%B3%E1%84%8F%E1%85%A9%E1%84%91%E1%85%B3-%E1%84%8E%E1%85%B5%E1%84%92%E1%85%AA%E1%86%AB-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/</link>
@@ -230,6 +237,13 @@
 &lt;h2 id=&quot;section-4&quot;&gt;참고 문헌&lt;/h2&gt;
 
 &lt;p&gt;[1] Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgN2M5MTkwM2EtNWFkZC00ZTI3LWFjZTUtNTFhZGZiYmUzODc1/view&quot;&gt;OCP: The Open-Closed Principle.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-5&quot;&gt;관련 문서&lt;/h2&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;/2016/04/17/SOLID-개요&quot;&gt;SOLID 개요&lt;/a&gt;&lt;br /&gt;
+[2] &lt;a href=&quot;/2016/05/01/단일-책임-원칙&quot;&gt;단일 책임 원칙 SRP&lt;/a&gt;&lt;br /&gt;
+[3] &lt;a href=&quot;/2016/05/04/개방-폐쇄-원칙&quot;&gt;개방 폐쇄 법칙 OCP&lt;/a&gt;&lt;br /&gt;
+[4] &lt;a href=&quot;/2016/06/03/리스코프-치환-원칙&quot;&gt;리스코프 치환 법칙 LSP&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
 </description>
         <pubDate>Wed, 04 May 2016 21:32:18 +0900</pubDate>
         <link>//2016/05/04/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%BC-%E1%84%91%E1%85%A8%E1%84%89%E1%85%AB-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/</link>
@@ -304,6 +318,13 @@
 &lt;h2 id=&quot;section-3&quot;&gt;참고 문헌&lt;/h2&gt;
 
 &lt;p&gt;[1] Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0ByOwmqah_nuGNHEtcU5OekdDMkk/view&quot;&gt;SRP: The Single Responsibility Principle.&lt;/a&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;section-4&quot;&gt;관련 문서&lt;/h2&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;/2016/04/17/SOLID-개요&quot;&gt;SOLID 개요&lt;/a&gt;&lt;br /&gt;
+[2] &lt;a href=&quot;/2016/05/01/단일-책임-원칙&quot;&gt;단일 책임 원칙 SRP&lt;/a&gt;&lt;br /&gt;
+[3] &lt;a href=&quot;/2016/05/04/개방-폐쇄-원칙&quot;&gt;개방 폐쇄 법칙 OCP&lt;/a&gt;&lt;br /&gt;
+[4] &lt;a href=&quot;/2016/06/03/리스코프-치환-원칙&quot;&gt;리스코프 치환 법칙 LSP&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 01 May 2016 17:32:18 +0900</pubDate>
         <link>//2016/05/01/%E1%84%83%E1%85%A1%E1%86%AB%E1%84%8B%E1%85%B5%E1%86%AF-%E1%84%8E%E1%85%A2%E1%86%A8%E1%84%8B%E1%85%B5%E1%86%B7-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/</link>
@@ -353,6 +374,13 @@
 &lt;/ul&gt;
 
 &lt;p&gt;이어지는 글에서 하나씩 자세히 살펴보도록 하자.&lt;/p&gt;
+
+&lt;h2 id=&quot;section-2&quot;&gt;관련 문서&lt;/h2&gt;
+
+&lt;p&gt;[1] &lt;a href=&quot;/2016/04/17/SOLID-개요&quot;&gt;SOLID 개요&lt;/a&gt;&lt;br /&gt;
+[2] &lt;a href=&quot;/2016/05/01/단일-책임-원칙&quot;&gt;단일 책임 원칙 SRP&lt;/a&gt;&lt;br /&gt;
+[3] &lt;a href=&quot;/2016/05/04/개방-폐쇄-원칙&quot;&gt;개방 폐쇄 법칙 OCP&lt;/a&gt;&lt;br /&gt;
+[4] &lt;a href=&quot;/2016/06/03/리스코프-치환-원칙&quot;&gt;리스코프 치환 법칙 LSP&lt;/a&gt;&lt;br /&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 17 Apr 2016 21:32:18 +0900</pubDate>
         <link>//2016/04/17/SOLID-%E1%84%80%E1%85%A2%E1%84%8B%E1%85%AD/</link>
