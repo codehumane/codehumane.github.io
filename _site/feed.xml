@@ -18,7 +18,7 @@
   &lt;p&gt;– &lt;cite&gt;Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgNzAzZjA5ZmItNjU3NS00MzQ5LTkwYjMtMDJhNDU5ZTM0MTlh/view&quot;&gt;LSP: The Liskov Substitution Principle&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;기반 클래스&lt;sup&gt;base class&lt;/sup&gt;의 사용자는 파생 클래스&lt;sup&gt;derived class&lt;/sup&gt;의 존재를 몰라도 기반 클래스를 사용할 수 있어야 한다. LSP를 위반한다는 것은 기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는 것이다. 이런 코드는 파생 클래스들이 추가될 때 마다 수정될 가능성이 높다. 즉, 수정에 닫혀 있지 못한 OCP 위반이 된다.&lt;/p&gt;
+&lt;p&gt;기반 클래스&lt;sup&gt;base class&lt;/sup&gt;의 사용자는 파생 클래스&lt;sup&gt;derived class&lt;/sup&gt;의 존재를 몰라도 기반 클래스를 사용할 수 있어야 한다. LSP를 위반한다는 것은 기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는 것이다. 이런 코드는 파생 클래스들이 추가될 때 마다 수정될 가능성이 높다. 즉, 수정에 닫혀 있지 못한 &lt;a href=&quot;&quot;&gt;OCP&lt;/a&gt; 위반이 된다.&lt;/p&gt;
 
 &lt;p&gt;이를 설명하는 여러 예제가 있지만 사각형과 정사각형 이야기가 가장 흥미롭다. 아래 그림을 먼저 보도록 하자.&lt;/p&gt;
 
@@ -67,7 +67,9 @@
 
 &lt;p&gt;기존의 &lt;i&gt;inconsistency&lt;/i&gt; 메서드는 &lt;i&gt;Rectangle&lt;/i&gt; 객체를 참조하고 있지만 이 객체가 &lt;i&gt;Square&lt;/i&gt;(&lt;i&gt;Rectangle&lt;/i&gt;의 파생 클래스)의 객체일 때는 기대한 대로 동작하지 않는다. 그래서 &lt;i&gt;ocpViolation&lt;/i&gt; 메서드 처럼 별도의 처리가 필요하게 되고, 결국 ‘기반 클래스를 참조하면서 파생 클래스들에 대해서도 알고 있는’ LSP 위반이 된다. 이런 식의 &lt;i&gt;Rectangle&lt;/i&gt; 파생 클래스가 추가될 때 마다 ocpViolation도 함께 수정해 주어야 하므로 OCP를 위반하게 된다.&lt;/p&gt;
 
-&lt;p&gt;파생 클래스들은 언제든지 기반 클래스로 치환&lt;sup&gt;substitution&lt;/sup&gt; 될 수 있어야 하며, 그러기 위해서 모든 파생 클래스들은 기반 클래스의 클라이언트 코드들이 기반 클래스에게 기대하는 것을 반드시 따라야만 한다. 이를 통해 기반 클래스들에 의존하는 코드들이 재사용 가능해지고 기반 클래스들의 변경에 영향 받지 않을 수 있게 된다. 이는 OCP가 추구하는 바 그대로이며, 이런 측면에서 LSP는 OCP를 따르기 위한 수단으로 보여지기도 한다.&lt;/p&gt;
+&lt;p&gt;파생 클래스들은 언제든지 기반 클래스로 치환&lt;sup&gt;substitution&lt;/sup&gt; 될 수 있어야 하며, 그러기 위해서 모든 파생 클래스들은 기반 클래스의 클라이언트 코드들이 기반 클래스에게 기대하는 것을 반드시 따라야만 한다. 이를 통해 기반 클래스들에 의존하는 코드들이 재사용 가능해지고 파생 클래스들의 변경에 영향 받지 않을 수 있게 된다. 이는 OCP가 추구하는 바 그대로이며, 이런 측면에서 LSP는 OCP를 따르기 위한 수단으로 보여지기도 한다.&lt;/p&gt;
+
+&lt;p&gt;&lt;i&gt;*작성된 코드 전체는 &lt;a href=&quot;https://github.com/codehumane/codehumane/tree/master/design-java/src/main/java/solid/lsp&quot;&gt;여기&lt;/a&gt;서 확인할 수 있습니다.&lt;/i&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;정사각형은 사각형인가?&lt;/h2&gt;
 
