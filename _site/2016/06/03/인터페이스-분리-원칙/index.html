@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>인터페이스 분리 원칙 (ISP) &#8211; codehumane</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="SOLID의 인터페이스 분리 원칙&lt;sup&gt;Interface Segregation Principle&lt;/sup&gt; 소개">
+    <meta name="author" content="Gunhee Cho">
+    <meta name="keywords" content="">
+    <link rel="canonical" href="//2016/06/03/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%90%E1%85%A5%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3-%E1%84%87%E1%85%AE%E1%86%AB%E1%84%85%E1%85%B5-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/">
+    <link rel="alternate" type="application/rss+xml" title="RSS Feed for codehumane" href="/feed.xml" />
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/pixyll.css?201606161938" type="text/css">
+
+    <!-- Fonts -->
+    <!-- <link href='//fonts.googleapis.com/css?family=Merriweather:900,900italic,300,300italic' rel='stylesheet' type='text/css'> -->
+    <!-- <link href='//fonts.googleapis.com/css?family=Lato:900,300' rel='stylesheet' type='text/css'> -->
+    <link href='//fonts.googleapis.com/earlyaccess/nanumgothic.css' rel='stylesheet' type='text/css'>
+    
+
+    <!-- MathJax -->
+    
+
+    <!-- Verifications -->
+    
+
+    <!-- Open Graph -->
+    <!-- From: https://github.com/mmistakes/hpstr-jekyll-theme/blob/master/_includes/head.html -->
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="인터페이스 분리 원칙 (ISP)">
+    <meta property="og:description" content="소프트웨어 개발 이야기">
+    <meta property="og:url" content="//2016/06/03/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%90%E1%85%A5%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3-%E1%84%87%E1%85%AE%E1%86%AB%E1%84%85%E1%85%B5-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/">
+    <meta property="og:site_name" content="codehumane">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary" />
+    
+    <meta name="twitter:title" content="인터페이스 분리 원칙 (ISP)" />
+    <meta name="twitter:description" content="SOLID의 인터페이스 분리 원칙<sup>Interface Segregation Principle</sup> 소개" />
+    <meta name="twitter:url" content="//2016/06/03/%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%90%E1%85%A5%E1%84%91%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%89%E1%85%B3-%E1%84%87%E1%85%AE%E1%86%AB%E1%84%85%E1%85%B5-%E1%84%8B%E1%85%AF%E1%86%AB%E1%84%8E%E1%85%B5%E1%86%A8/" />
+
+    <!-- Icons -->
+    <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/apple-touch-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link rel="icon" type="image/png" href="/favicon-192x192.png" sizes="192x192">
+    <link rel="icon" type="image/png" href="/favicon-160x160.png" sizes="160x160">
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
+    <link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-76183388-1', 'auto');
+    ga('send', 'pageview');
+  </script>
+</head>
+
+<body class="site">
+
+	
+
+  <div class="site-wrap">
+    <header class="site-header px2 px-responsive">
+  <div class="mt2 wrap">
+    <div class="measure">
+      <a href="/" class="site-title">codehumane</a>
+      <nav class="site-nav">
+        
+    
+
+    
+        <a href="/about/">About</a>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+
+      </nav>
+      <div class="clearfix"></div>
+      
+    </div>
+  </div>
+</header>
+
+
+    <div class="post p2 p-responsive wrap" role="main">
+      <div class="measure">
+        
+
+
+<div class="post-header mb2">
+  <h1>인터페이스 분리 원칙 (ISP)</h1>
+  <span class="post-meta">Jun 3, 2016</span><br>
+  
+  <span class="post-meta small">
+  
+    3 minute read
+  
+  </span>
+</div>
+
+<article class="post-content">
+  <p>SOLID의 네 번째 원칙인 인터페이스 분리 원칙<sup>Interface Segregation Principle</sup>에 대해 알아보도록 한다.</p>
+
+<h2 id="section">인터페이스 분리 원칙이란?</h2>
+
+<blockquote>
+  <p>“CLIENTS SHOULD NOT BE FORCED TO DEPEND UPON INTERFACES THAT THEY DO NOT USE.”</p>
+
+  <p>– <cite>Robert Martin. <a href="https://drive.google.com/file/d/0BwhCYaYDn8EgOTViYjJhYzMtMzYxMC00MzFjLWJjMzYtOGJiMDc5N2JkYmJi/view">ISP: The Interface Segregation Principle</a></cite></p>
+</blockquote>
+
+<p>사용하지 않는 인터페이스에 대한 의존을 클라이언트에게 강제해서는 안된다. 클라이언트 간의 의도치 않은 결합을 피하기 위해서이다. A라는 인터페이스가 있고 이를 사용하는 클라이언트 B, C가 있다고 해보자. B가 사용하지만 C는 사용하지 않는 메서드가 A에 포함되어 있다면, 이 메서드가 변경될 때 마다 C는 자신과 상관 없는 이유로 영향을 받게 된다.</p>
+
+<p>이어지는 예제와 함께 좀 더 살펴보도록 하자.</p>
+
+<p><img src="/images/인터페이스-분리-원칙-ISP/그림1-fat-interface.png" alt="" /></p>
+
+<p>그림 1. 뚱뚱한 인터페이스</p>
+
+<p>문을 열고 닫으며, 열려 있는지 여부를 확인할 수 있는 <i>Door</i> 인터페이스가 있다. 만약, 일정 시간이 지났을 때 문을 자동으로 닫히게 하려면 어떻게 해야 할까? 여러 가지 방법이 있겠지만 <i>TimerClient</i> 인터페이스를 추가하는 방법을 고려해 볼 수 있다. 이 인터페이스에는 일정 시간이 지났음을 통지 받는 <i>timeout</i> 메서드가 있다. 그리고 이 타임아웃을 통지하는 <i>Timer</i>가 있고 <i>register</i> 메서드를 통해 통지 대상을 등록할 수 있다. 이를 구현한 코드는 아래와 같다.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Timer</span> <span class="o">{</span>
+   <span class="kt">void</span> <span class="n">register</span><span class="o">(</span><span class="kt">int</span> <span class="n">timeout</span><span class="o">,</span> <span class="n">TimerClient</span> <span class="n">timerClient</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">TimerClient</span> <span class="o">{</span>  
+   <span class="kt">void</span> <span class="n">timeout</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Door</span> <span class="kd">extends</span> <span class="n">TimerClient</span> <span class="o">{</span>
+   <span class="kt">void</span> <span class="n">lock</span><span class="o">();</span>
+   <span class="kt">void</span> <span class="n">unlock</span><span class="o">();</span>
+   <span class="kt">boolean</span> <span class="n">isDoorOpen</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">TimedDoor</span> <span class="kd">implements</span> <span class="n">Door</span> <span class="o">{</span>
+
+   <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">locked</span><span class="o">;</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="n">lock</span><span class="o">()</span> <span class="o">{</span>
+       <span class="n">locked</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+   <span class="o">}</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="n">unlock</span><span class="o">()</span> <span class="o">{</span>
+       <span class="n">locked</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+   <span class="o">}</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">boolean</span> <span class="n">isDoorOpen</span><span class="o">()</span> <span class="o">{</span>
+       <span class="k">return</span> <span class="o">!</span><span class="n">locked</span><span class="o">;</span>
+   <span class="o">}</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="n">timeout</span><span class="o">()</span> <span class="o">{</span>
+       <span class="n">lock</span><span class="o">();</span>
+   <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>위 방식은 어떤 문제를 포함하고 있을까? 우선, 타이머 기능이 필요 없는 <i>Door</i> 구현체 생성 시 불필요한 <i>timeout</i> 구현이 발생한다. 아마도 <i>timeout</i> 메서드는 아무것도 하지 않는 구현이 될 것이다. 게다가 <i>TimerClient</i>의 상속은 오로지 타이머 관련 구현체들만을 위한 노력이다. 이런 식의 상속이 계속된다면 <i>Door</i>는 머지 않아 뚱뚱한 인터페이스<sup>fat interface</sup>가 될 것이다. Door의 구현체들은 자신과 상관 없는 인터페이스 추가로 인해 꾸준한 구현 부담을 안게 된다. 이 부담을 덜기 위해 <i>Door</i> 인터페이스에 대해 비어 있는 구현을 제공하는 상위 클래스를 둔다고 하면 이는 LSP(리스코프 치환 원칙) 위반이다.</p>
+
+<h2 id="supseparation-through-delegationsup">위임을 통한 분리<sup>Separation through Delegation</sup></h2>
+
+<p>위 문제를 해결하기 위한 방법으로 위임을 생각해 볼 수 있다.</p>
+
+<p><img src="/images/인터페이스-분리-원칙-ISP/그림2-separation-through-delegation.png" alt="" /></p>
+
+<p><i>DoorTimerAdapter</i>는 <i>TimerClient</i>의 구현체로써 <i>Timer</i>로부터 타임아웃을 통지 받을 수 있다. 이 때 통지 받은 메시지는 <i>TimedDoor</i>에게 바로 위임된다. 위임을 통해 기존 인터페이스의 수정 없이 새로운 인터페이스를 지원 하므로 <a href="https://en.wikipedia.org/wiki/Adapter_pattern#Object_Adapter_pattern">객체 형식의 어댑터 패턴</a>이라고 할 수 있다.</p>
+
+<p>코드는 다음과 같다.</p>
+
+<figure class="highlight"><pre><code class="language-java" data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">DoorTimerAdapter</span> <span class="kd">implements</span> <span class="n">TimerClient</span> <span class="o">{</span>
+
+   <span class="kd">private</span> <span class="n">Door</span> <span class="n">door</span><span class="o">;</span>
+
+   <span class="kd">public</span> <span class="n">DoorTimerAdapter</span><span class="o">(</span><span class="n">Door</span> <span class="n">door</span><span class="o">)</span> <span class="o">{</span>
+       <span class="k">this</span><span class="o">.</span><span class="na">door</span> <span class="o">=</span> <span class="n">door</span><span class="o">;</span>
+   <span class="o">}</span>
+
+   <span class="nd">@Override</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="n">timeout</span><span class="o">()</span> <span class="o">{</span>
+       <span class="n">door</span><span class="o">.</span><span class="na">lock</span><span class="o">();</span>
+   <span class="o">}</span>
+<span class="o">}</span></code></pre></figure>
+
+<p>이렇게 하면 <i>Door</i>의 클라이언트와 <i>Timer</i>의 결합을 피할 수 있다. 게다가 기존 <i>TimedDoor</i>를 변경할 필요가 없으며, <i>Timer</i>의 어떠한 변경에도 <i>Door</i>의 사용자는 영향 받지 않는다. 이에 대한 평가를 내리기에 앞서 아래 방식을 먼저 살펴보도록 하자.</p>
+
+<h2 id="supseparation-through-multiple-interfacesup">다중 인터페이스를 통한 분리<sup>separation through Multiple Interface</sup></h2>
+
+<p>한편 <i>TimedDoor</i>가 <i>Door</i>와 <i>TimerClient</i> 모두를 구현하도록 하는, 다중 인터페이스 방식으로 문제를 해결할 수도 있다. 이렇게 하면 서로 다른 클라이언트가 <i>TimedDoor</i>에 의존하지 않으면서도 <i>TimedDoor</i>를 쓸 수 있게 된다. 인터페이스가 분리되어 있으므로 특정 인터페이스의 변경은 그와 관련된 클라이언트에만 영향을 미친다. 또한 기존 <i>Door</i>의 구현체들이 일일이 <i>TimedDoor</i>에만 필요한 <i>timeout</i>을 구현하지 않아도 되며, 인터페이스는 자신의 관심사만 응집력 있게 유지될 수 있다.</p>
+
+<p><img src="/images/인터페이스-분리-원칙-ISP/그림3-separation-through-Multiple-Interface.png" alt="" /></p>
+
+<p>위임을 통한 분리와는 어떤 차이가 있을까? 기존 코드의 변경 없이 새로운 방식의 커뮤니케이션을 지원하므로 어댑터 패턴인 것은 동일하지만, 클래스에 새로운 인터페이스를 추가하였으므로 <a href="https://en.wikipedia.org/wiki/Adapter_pattern#Class_Adapter_pattern">클래스 형식의 어댑터 패턴</a>이다. 따라서 객체 형식의 어댑터와 차이점이 무엇인지 생각해 보면 된다. 클래스 형식의 객체 형식 대비 장단점은 다음과 같다.</p>
+
+<ul>
+  <li>타임아웃 등록을 위한 별도의 객체 생성이 필요 없다.</li>
+  <li>단지 위임만을 수행하는 코드 작성이 필요 없다.</li>
+  <li>다른 <i>Door</i> 구현체가 <i>TimerClient</i>가 되어야 하는 경우 <i>timeout</i>을 일일이 구현해야 한다.</li>
+  <li><i>TimedDoor</i>의 인스턴스화 시 <i>Door</i>의 구현부와 <i>TimerClient</i> 구현부가 항상 생명 주기를 함께 한다.</li>
+</ul>
+
+<h2 id="section-1">참고 문헌</h2>
+
+<p>[1] Robert Martin. <a href="https://drive.google.com/file/d/0BwhCYaYDn8EgOTViYjJhYzMtMzYxMC00MzFjLWJjMzYtOGJiMDc5N2JkYmJi/view">ISP: The Interface Segregation Principle</a>
+[2] wikipedia. <a href="https://en.wikipedia.org/wiki/Adapter_pattern">Adapter Pattern</a></p>
+
+</article>
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <footer class="center">
+  <div class="measure">
+    <small>
+      <a href="http://github.com/codehumane">Github</a><br>
+      <a href="mailto:codehumane@gmail.com">Email</a>
+    </small>
+  </div>
+</footer>
+
+</body>
+</html>
