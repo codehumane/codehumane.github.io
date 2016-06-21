@@ -18,7 +18,7 @@
   &lt;p&gt;– &lt;cite&gt;Robert Martin. &lt;a href=&quot;https://drive.google.com/file/d/0BwhCYaYDn8EgOTViYjJhYzMtMzYxMC00MzFjLWJjMzYtOGJiMDc5N2JkYmJi/view&quot;&gt;ISP: The Interface Segregation Principle&lt;/a&gt;&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;사용하지도 않는 인터페이스에 의존하도록 클라이언트에게 강제해서는 안된다. 클라이언트 간의 의도치 않은 결합을 피하기 위해서이다. A라는 인터페이스가 있고 이를 사용하는 클라이언트 B, C가 있다고 해보자. B가 사용하지만 C는 사용하지 않는 메서드가 A에 포함되어 있다면, 이 메서드가 변경될 때 마다 C는 자신과 상관 없는 이유로 영향을 받게 된다.&lt;/p&gt;
+&lt;p&gt;사용하지도 않는 인터페이스에 클라이언트가 의존해서는 안된다. 클라이언트 간의 의도치 않은 결합을 피하기 위해서이다. A라는 인터페이스가 있고 이를 사용하는 클라이언트 B, C가 있다고 해보자. B가 사용하지만 C는 사용하지 않는 메서드가 A에 포함되어 있다면, 이 메서드가 변경될 때 마다 C는 자신과 상관 없는 이유로 영향을 받게 된다.&lt;/p&gt;
 
 &lt;h2 id=&quot;section-1&quot;&gt;뚱뚱한 인터페이스&lt;/h2&gt;
 
