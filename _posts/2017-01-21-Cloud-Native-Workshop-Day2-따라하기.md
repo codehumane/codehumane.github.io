@@ -31,7 +31,7 @@ Josh Long의  '[Cloud Native Java Workshop](https://github.com/joshlong/cloud-na
 - [x] Git commit ID 플러그인 적용
 - [x] `@RepositoryEventHandler`와 `CounterService`로 Graphite에게 메트릭 보내기
 
-## 따라하기
+## 참고 리소스
 
 아래 3가지 리소스를 기반으로 학습을 진행함
 
@@ -39,7 +39,7 @@ Josh Long의  '[Cloud Native Java Workshop](https://github.com/joshlong/cloud-na
 2. [Cloud Native Workshop Github repository](https://github.com/joshlong/cloud-native-workshop/tree/master/labs/2/reservation-service)
 3. [Spring Boot Actuator: Production-ready features](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready.html)
 
-### Actuator Endpoints 추가
+## Actuator Endpoints 추가
 
 - 어플리케이션과의 상호 작용 및 모니터링을 위한 방법을 제공함
 - 자세한 설명은 [Spring Boot Endpoints](http://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-endpoints.html)를 참고
@@ -57,7 +57,7 @@ autoconfig | 모든 자동 설정<sup>auto-configuration</sup> 후보들을 적�
 health | 시스템 헬스<sup>health</sup> 정보를 보여줌 | true
 trace | 시스템 트레이스(마지막 100개의 HTTP 요청) 정보 | true
 
-### HealthIndicator 커스터마이징
+## HealthIndicator 커스터마이징
 
 - 위에서 소개된 Endpoint들은 커스터마이징 가능하며, 자신만의 Endpoint를 등록할 수도 있다.
 - 2가지 방법이 존재함
@@ -86,7 +86,7 @@ HealthIndicator healthIndicator() {
     + endpoint 경로가 `/health` 대신 `/admin/health` 경로로 바뀜
     + `healthIndicator`의 `status` 항목 값이 `health.status.custom`로 바뀜
 
-### Graphite 실행
+## Graphite 실행
 
 - 아래의 shell 스크립트를 작성
 
@@ -114,7 +114,7 @@ docker run --name cna-graphite -p 80:80 -p 2003:2003 -p 8125:8125/udp hopsoft/gr
 2003 | Carbon의 [plaintext protocol](http://graphite.readthedocs.io/en/latest/feeding-carbon.html#the-plaintext-protocol)로 데이터를 받기 위한 포트
 8125 | [StatsD](https://github.com/etsy/statsd/blob/master/docs/server.md)가 보내는 데이터를 받기 위한 포트
 
-### GRAPHITE_HOST 및 GRAPHITE_PORT 환경 변수 설정
+## GRAPHITE_HOST 및 GRAPHITE_PORT 환경 변수 설정
 
 - 다음 단계에 등장하는 GraphiteReporter @Bean을 위해 graphite 접근 정보를 환경 변수에 설정
 - 우선 `$DOCKER_IP`를 구함
@@ -133,7 +133,7 @@ export GRAPHITE_PORT=2003
 
 - 환경 변수 반영을 위해 shell 세션과 IntelliJ 재시작
 
-### GraphiteReporter @Bean 추가
+## GraphiteReporter @Bean 추가
 
 - GraphiteReporter는 graphite로 데이터를 보내주는 @Bean
 - 우선, gradle에 아래 의존성 추가
@@ -166,7 +166,7 @@ GraphiteReporter graphiteReporter(
     + 참고로, host와 port의 값은 `@Value`를 통해 각각 `GRAPHITE_HOST`와 `GRAPHITE_PORT`의 값으로 할당됨
         * 설정값이 @Value에 할당되는 과정은 [Externalized Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html) 문서를 참고
 
-### '완전히 실행 가능한' `.jar` 만들기
+## '완전히 실행 가능한' `.jar` 만들기
 
 - `executable` 설정 플래그을 이용하면, '완전히 실행 가능한<sup>fully executable</sup>` jar를 만들 수 있음
 - 즉, `java -jar ${jar명}` 명령어 대신, `./${jar명}`으로 어플리케이션이 실행 가능해짐
@@ -184,7 +184,7 @@ springBoot {
     + `./build/libs/cloud-native-workshop-DAY2.jar`
     + 실제로 실행됨을 확인할 수 있음
 
-### HAL 브라우저로 Actuator endpoint 살펴보기
+## HAL 브라우저로 Actuator endpoint 살펴보기
 
 - Spring Data REST 문서의 [The HAL Browser](http://docs.spring.io/spring-data/rest/docs/current/reference/html/#_the_hal_browser0) 설명
 
@@ -201,7 +201,7 @@ springBoot {
 - 기본 설정은 루트 경로에서 HAL Browser를 제공함
 - Explorer 항목에 `/admin`, `/admin/health` 등을 넣어보며 Actuator endpoint를 확인할 수 있음
 
-### Resource Filtering
+## Resource Filtering
 
 - 여기서부터는 이해를 돕기 위해 Cloud Native Workshop과는 절차를 조금 다르게 진행하려 하려함
 - 우선은 Resource Filtering부터 시작할건데, 이는 원래 과정의 다음 2개 단계에 해당함
@@ -248,7 +248,7 @@ process.resources.project.version=day2
 - 이는 또한 Actuator를 통해서도 확인 가능함
     + endpoint를 `admin/env`로 접근하여 `applicationConfig` 항목을 보면 값을 확인할 수 있음
 
-### Git commit ID 플러그인 적용
+## Git commit ID 플러그인 적용
 
 - ['Git commit id plugin' Git Repository](https://github.com/ktoso/maven-git-commit-id-plugin/blob/master/README.md)에 가보면 이 플러그인의 가치와 사용 사례가 잘 나와 있음. 배포된 어플리케이션의 git revision 정보 제공은 꼭 필요한 일인데, 이 플러그인은 이를 설정만으로 가능하게 해줌
 - [gradle plugin com.gorylenko.gradle-git-properties](https://plugins.gradle.org/plugin/com.gorylenko.gradle-git-properties) 문서를 따라 아래 내용을 `build.gradle`에 추가
@@ -304,7 +304,7 @@ gitProperties {
 management.info.git.mode=full
 ```
 
-### `@RepositoryEventHandler`와 `CounterService`로 Graphite에게 메트릭 보내기
+## `@RepositoryEventHandler`와 `CounterService`로 Graphite에게 메트릭 보내기
 
 - [`Entity`의 이벤트를 처리하는 방법](http://docs.spring.io/spring-data/rest/docs/2.0.x/reference/html/events-chapter.html) 중의 하나로 `@RepositoryEventHandler` 애노테이션이 존재함
 - 이벤트의 종류는 6가지임
