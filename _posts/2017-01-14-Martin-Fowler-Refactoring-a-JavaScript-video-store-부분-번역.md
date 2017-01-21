@@ -1,7 +1,7 @@
 ---
 layout:     post
 title:      Martin Fowler - Refactoring a JavaScript video store 부분 번역
-date:       2017-01-04 15:32:18
+date:       2017-01-14 15:32:18
 summary:    Comparing the approaches 부분
 ---
 
