@@ -12,6 +12,8 @@ Josh Long의  '[Cloud Native Java Workshop](https://github.com/joshlong/cloud-na
 ## 과정 간단 소개
 
 > In this lab, we'll look at how Spring Boot is optimized for the continuous delivery of applications into production.
+>
+> - 출처: [Making a Spring Boot application Production Ready](https://github.com/joshlong/cloud-native-workshop#2-making-a-spring-boot-application-production-ready)
 
 코드의 완성과 프로덕션 반영은 완전히 다르며, 이 사이의 여정은 어느 누구의 예상보다 길다고 한다. 이 과정에서는 Spring Boot가 프로덕션 환경에서의 지속적 배포를 어떻게 돕는지 살펴본다.
 
