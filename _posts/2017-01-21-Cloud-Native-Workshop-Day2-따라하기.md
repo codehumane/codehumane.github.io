@@ -19,17 +19,16 @@ Josh Long의  '[Cloud Native Java Workshop](https://github.com/joshlong/cloud-na
 
 ## 전체 절차
 
-- [x] `org.springframework.boot:spring-boot-starter-actuator` 추가
-- [x] 사용자가 정의한 `HealthIndicator`를 통해 `HealthEndpoint` 커스터마이징
-- [x] `./bin/graphite.sh` 실행
-- [x] 2개의 환경 변수 `GRAPHITE_HOST` (`export GRAPHITE_HOST="$DOCKER_IP"`) and `GRAPHITE_PORT` (`2003`) 설정 (변수 설정 후 IDE를 재시작해야 할지도 모름)
-- [x] `GraphiteReporter` @Bean 추가
-- [x] `io.dropwizard.metrics:metrics-graphite` 추가
-- [x] '완전히 실행 가능한' `.jar` 만들기
+- [x] Actuator Endpoints 추가
+- [x] HealthIndicator 커스터마이징
+- [x] Graphite 실행
+- [x] `GRAPHITE_HOST` 및 `GRAPHITE_PORT` 환경 변수 설정
+- [x] GraphiteReporter @Bean 추가
+- [x] '완전히 실행 가능한' jar 만들기
 - [x] HAL 브라우저로 Actuator endpoint 살펴보기
 - [x] Resoure Filtering 적용
 - [x] Git commit ID 플러그인 적용
-- [x] `@RepositoryEventHandler`와 `CounterService`로 Graphite에게 메트릭 보내기
+- [x] @RepositoryEventHandler와 CounterService로 Graphite에게 메트릭 보내기
 
 ## 참고 리소스
 
@@ -67,8 +66,8 @@ trace | 시스템 트레이스(마지막 100개의 HTTP 요청) 정보 | true
 - 먼저, endpoint 접근 prefix를 `/admin`으로 설정하는 작업
     + `src/main/resources/application.properties` 파일 열기
     + `management.context-path=/admin` 설정 추가
-- 다음으로, 사용자 정의 `HealthIndicator`를 등록
-    + `org.springframework.boot.actuate.health.HealthIndicator` 구현체를 `@Bean`으로 등록
+- 다음으로, 사용자 정의 HealthIndicator를 등록
+    + `org.springframework.boot.actuate.health.HealthIndicator` 구현체를 @Bean으로 등록
 
 ```java
 @Bean
@@ -84,7 +83,7 @@ HealthIndicator healthIndicator() {
 
 - 어플리케이션을 재시작하면 아래 2가지 변경 사항이 확인됨
     + endpoint 경로가 `/health` 대신 `/admin/health` 경로로 바뀜
-    + `healthIndicator`의 `status` 항목 값이 `health.status.custom`로 바뀜
+    + healthIndicator의 status 항목 값이 `health.status.custom`로 바뀜
 
 ## Graphite 실행
 
@@ -157,19 +156,19 @@ GraphiteReporter graphiteReporter(
 ```
 
 - 코드를 간단히 살펴보면,
-    + `GraphiteReporter`는 Graphite에게 측정<sup>metric</sup> 값들을 보내주는 보고자
-    + `MetricRegistry`는 Spring Boot의 측정 값들이 등록되는 곳
-        * 이 `MetricRegistry`의 측정값들이 `/metrics` endpoint를 통해 노출됨
+    + GraphiteReporter는 Graphite에게 측정<sup>metric</sup> 값들을 보내주는 보고자
+    + MetricRegistry는 Spring Boot의 측정 값들이 등록되는 곳
+        * 이 MetricRegistry의 측정값들이 `/metrics` endpoint를 통해 노출됨
         * [Spring Boot 레퍼런스 Dropwizard Metrics](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html#production-ready-dropwizard-metrics) 참조
-    + `Graphite`는 `GraphiteReporter`의 보고 대상
-    + 그리고 `GraphiteReporter`는 보고를 2분 간격으로 하도록 설정되어 실행됨
-    + 참고로, host와 port의 값은 `@Value`를 통해 각각 `GRAPHITE_HOST`와 `GRAPHITE_PORT`의 값으로 할당됨
+    + Graphite는 GraphiteReporter의 보고 대상
+    + 그리고 GraphiteReporter는 보고를 2분 간격으로 하도록 설정되어 실행됨
+    + 참고로, `host`와 `port`의 값은 `@Value`를 통해 각각 `GRAPHITE_HOST`와 `GRAPHITE_PORT`의 값으로 할당됨
         * 설정값이 @Value에 할당되는 과정은 [Externalized Configuration](https://docs.spring.io/spring-boot/docs/current/reference/html/boot-features-external-config.html) 문서를 참고
 
-## '완전히 실행 가능한' `.jar` 만들기
+## '완전히 실행 가능한' jar 만들기
 
 - `executable` 설정 플래그을 이용하면, '완전히 실행 가능한<sup>fully executable</sup>` jar를 만들 수 있음
-- 즉, `java -jar ${jar명}` 명령어 대신, `./${jar명}`으로 어플리케이션이 실행 가능해짐
+- 즉, `java -jar 파일명` 명령어 대신, `파일명`으로 어플리케이션이 실행 가능해짐
 - 자세한 내용은 [Installing Spring Boot applications](http://docs.spring.io/spring-boot/docs/current/reference/html/deployment-install.html) 참고
 - gradle 사용시에는 `build.gradle`에 아래 내용을 추가
 
@@ -279,14 +278,14 @@ plugins {
 [ERROR] [org.gradle.BuildExceptionReporter] 	... 64 more
 ```
 
-- 이 플러그인의 [Git Repository](https://github.com/n0mer/gradle-git-properties)로 가서 [에러나는 코드 부분](https://github.com/n0mer/gradle-git-properties/blob/master/src/main/groovy/com/gorylenko/GitPropertiesPlugin.groovy#L73)을 열어보면 대략 다음과 같은 코드가 보임
+- [이 플러그인의 Git Repository](https://github.com/n0mer/gradle-git-properties)로 가서 [에러나는 코드 부분](https://github.com/n0mer/gradle-git-properties/blob/master/src/main/groovy/com/gorylenko/GitPropertiesPlugin.groovy#L73)을 열어보면 대략 다음과 같은 코드가 보임
 
 ```gradle
 def repo = Grgit.open(dir: project.gitProperties.gitRepositoryRoot ?: project.rootProject.file('.'))
 ```
 
 - 현재 프로젝트의 최상위 경로가 git repository의 root가 아니어서 발생하는 문제임을 예상할 수 있음
-    + 좀 더 자세한 원인은 `jgit`의 [`BaseRepositoryBuilder`](https://github.com/spearce/jgit/blob/master/org.eclipse.jgit/src/org/eclipse/jgit/lib/BaseRepositoryBuilder.java) 참고
+    + 좀 더 자세한 원인은 `jgit`의 [BaseRepositoryBuilder](https://github.com/spearce/jgit/blob/master/org.eclipse.jgit/src/org/eclipse/jgit/lib/BaseRepositoryBuilder.java) 참고
 - `build.gradle`에 아래 내용을 추가한다.
 
 ```gradle
@@ -304,9 +303,9 @@ gitProperties {
 management.info.git.mode=full
 ```
 
-## `@RepositoryEventHandler`와 `CounterService`로 Graphite에게 메트릭 보내기
+## @RepositoryEventHandler와 CounterService로 Graphite에게 메트릭 보내기
 
-- [`Entity`의 이벤트를 처리하는 방법](http://docs.spring.io/spring-data/rest/docs/2.0.x/reference/html/events-chapter.html) 중의 하나로 `@RepositoryEventHandler` 애노테이션이 존재함
+- [`Entity`의 이벤트를 처리하는 방법](http://docs.spring.io/spring-data/rest/docs/2.0.x/reference/html/events-chapter.html) 중의 하나로 @RepositoryEventHandler 애노테이션이 존재함
 - 이벤트의 종류는 6가지임
     + BeforeCreateEvent
     + AfterCreateEvent
@@ -316,7 +315,7 @@ management.info.git.mode=full
     + AfterLinkSaveEvent
     + BeforeDeleteEvent
     + AfterDeleteEvent
-- [자신만의 메트릭을 기록](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html)하기 위해 [`CounterService`](https://github.com/spring-projects/spring-boot/blob/v1.4.3.RELEASE/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/CounterService.java)나 [`GaugeService`](https://github.com/spring-projects/spring-boot/blob/v1.4.3.RELEASE/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/GaugeService.java)를 이용할 수 있음
+- [자신만의 메트릭을 기록](https://docs.spring.io/spring-boot/docs/current/reference/html/production-ready-metrics.html)하기 위해 [CounterService](https://github.com/spring-projects/spring-boot/blob/v1.4.3.RELEASE/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/CounterService.java)나 [GaugeService](https://github.com/spring-projects/spring-boot/blob/v1.4.3.RELEASE/spring-boot-actuator/src/main/java/org/springframework/boot/actuate/metrics/GaugeService.java)를 이용할 수 있음
 - 메트릭의 이름으로는 어느 것이나 사용가능하지만, 메트릭을 보내는 툴의 가이드라인을 따르는 것이 좋음
     + Graphite는 여기 [가이드라인](https://matt.aimonetti.net/posts/2013/06/26/practical-guide-to-graphite-monitoring/)을 참고
 - day1에서 작성했던 `Resrevation`의 생성과 소멸을 Graphite로 전송하기 위해 아래 코드를 작성
