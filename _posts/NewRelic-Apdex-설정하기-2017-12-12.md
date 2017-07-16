@@ -44,7 +44,7 @@ Apdex가 무엇인지는 알았다. 그런데 NewRelic에서 이 수치를 설�
 
 그림 3. NewRelic의 Apdex 점수 모니터링 화면
 
-모니터링 지표의 하나로 평균 응답 시간가 많이 사용된다. 이 수치는 물론 중요하다. 하지만 몇 가지 한계점들을 가지고 있다.
+모니터링 지표의 하나로 평균 응답 시간이 많이 사용된다. 이 수치는 물론 중요하다. 하지만 몇 가지 한계점들을 가지고 있다.
 
 1. 일부 성능 아웃라이어<sup>performance outlier</sup>들에 의해 일반적 응답 시간이 왜곡됨. 그리고 이런 아웃라이어들은 존재하기 마련.
 2. 평균 응답 시간으로는 얼마나 많은 사용자가 만족했고 좌절했는지를 나타내지 못함.
@@ -54,7 +54,7 @@ Apdex가 무엇인지는 알았다. 그런데 NewRelic에서 이 수치를 설�
 
 ![왜곡된 응답 시간](../images/newrelic-apdex/skewed-response-time.png)
 
-그림 4. 아웃라이어에 의해 왜곡된 응답 시간 (출처: [Dynatrace: Why Averages Suck and Percentiles are Great](https://www.dynatrace.com/blog/why-averages-suck-and-percentiles-are-great/))
+그림 4. 아웃라이어에 의해 왜곡된 평균 응답 시간 (출처: [Dynatrace: Why Averages Suck and Percentiles are Great](https://www.dynatrace.com/blog/why-averages-suck-and-percentiles-are-great/))
 
 이 그림으로 보면 일반적인 응답 시간은 2~3이라는 것을 알 수 있다. 그런데 이를 평균으로 계산해 보면, `4.46 = (2+14+18+12+10+12+7+8+9+10+11+12) / 28`이 된다. 생각해보자. 4.46이라는 값은 애플리케이션의 일반적인 응답 시간을 잘 설명해 주는가? 평균값이 아닌 중위수<sup>median</sup>를 사용하면 어떨까 싶지만, 또 다른 한계를 만나게 된다. 그리고 이런 아웃라이어들은 주변에서 얼마든지 쉽게 만날 수 있다.
 
@@ -64,9 +64,12 @@ Apdex를 사용하면 이런 한계들이 어느 정도 극복된다. 애플리�
 
 ## 적용하기
 
-- TBD
+적용 방법 자체는 정말 간단하다. [Change your Apdex settings](https://docs.newrelic.com/docs/apm/new-relic-apm/apdex/change-your-apdex-settings)을 보면 App server Apdex settings, End-user Apdex settings, Key transaction Apdex settings, Apdex alerting에 대한 설명이 잘 나와 있으니 참고하면 된다. 다만, 애플리케이션의 응답 시간 목표를 얼마로 잡아야 하는지 고민은 필요하다. 빠르면 빠를 수록 좋으나 Apdex T를 무조건 낮게 설정하면, 정상적인 응답들이 
+
+사용자 입장에서야 빠르면 빠를 수록 좋겠지만, 애플리케이션의 복잡도나 기술적 한계 등을 생각하지 않을 수 없다. 
+
 - [New Relic Blog: What should I set my Apdex goal to?](https://blog.newrelic.com/2011/01/21/what-should-i-set-my-apdex-goal-to/)
-- [New Relic Documents: Change your Apdex settings](https://docs.newrelic.com/docs/apm/new-relic-apm/apdex/change-your-apdex-settings)
+- ​
 
 ## 참고자료
 
