@@ -1,17 +1,23 @@
 pre,
 pre code {
-  background-color: transparent;
+  border: 0px solid #cfcfcf;
+  background-color: #fafafa;
   border-radius: $pre-border-radius;
 }
 
-pre,
 code {
-  font-family: $monospace-font-family;
+  color: rgba(0, 10, 19, 0.8);
+  overflow-wrap: break-word;
+  font-size: 15px;
+  border: 1px solid #cfcfcf;
+  border-radius: 3px;
+  background-color: #eef;
 }
 
-code {
-  color: #7a7a7a;
-  overflow-wrap: break-word;
+.highlight .p {
+  font-size: 1.125rem;
+  line-height: 1;
+  background-color: white;
 }
 
 pre {
@@ -19,7 +25,8 @@ pre {
   line-height: 1.11;
   overflow-x: scroll;
   margin-bottom: 0.88em;
-  background-color: $pre-background-color;
+  background-color: #fafafa;
+  border: 1px solid #cfcfcf;
 }
 
 .highlight .p {
