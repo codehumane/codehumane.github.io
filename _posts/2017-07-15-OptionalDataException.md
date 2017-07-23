@@ -52,7 +52,7 @@ java.io.OptionalDataException
 
 문제를 해결하려면 `OptionalDataException`에 대한 이해가 필요하다고 판단. 이 녀석의 정체를 살펴보기 시작함.
 
-# 문제 파악하기 2. `OptionalDataException` 이해
+# 문제 파악하기 2. OptionalDataException 이해
 
 `OptionalDataException`(이하 `ODE`)이 도대체 뭐지? [오라클 Java API 문서](https://docs.oracle.com/javase/7/docs/api/java/io/OptionalDataException.html)의 설명에 따르면, 이 예외는 다음의 2가지 경우에 발생.
 
@@ -144,11 +144,11 @@ class PersonWithSerializeHandling implements Serializable {
 
 `writeObject`는 한 번만 했는데, `readObject`는 2번 시도하니 `ODE` 발생함. 참고로, 이 작업을 클래스에 정의된 `readObject`가 아닌, 다른 곳에서 수행하면 `ODE`가 아니라 `EOF` 예외가 발생함. 전체 코드는 [여기](https://github.com/codehumane/troubleshoot-java/blob/master/optional-data-exception/src/OptionalDataExceptionTest.java)를 참고. 이제 어느 정도 이해가 되었다고 판단. 다음 단계로 넘어감.
 
-# 문제 파악하기 3. `SimpleSession` 살펴보기
+# 문제 파악하기 3. SimpleSession 살펴보기
 
 이제 에러 로그에서 2번째로 눈에 띄던 부분을 살펴보기로 함.
 
-> `org.apache.shiro.session.mgt.SimpleSession.readObject(SimpleSession.java:500)`
+> org.apache.shiro.session.mgt.SimpleSession.readObject(SimpleSession.java:500)
 
 문제가 되는 지점의 코드는 아래와 같음. 참고로, 당시 사용중인 `Apache Shiro`의 버전은 `1.2.3`. 전체 코드는 [여기](https://shiro.apache.org/static/1.2.3/apidocs/src-html/org/apache/shiro/session/mgt/SimpleSession.html)를 참고.
 
@@ -284,7 +284,7 @@ private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundE
 
 코드 배포 이후로는 `ODE` 발생하지 않음. 전체 코드는 [여기](https://github.com/codehumane/cache-handling/tree/master/src/main/java/session)에 기록함.
 
-# 버그픽스. `ThreadLocal` 갱신 조건
+# 버그픽스. ThreadLocal 갱신 조건
 
 `ODE`는 더 이상 발생하지 않았으나, 이따금 버그가 발생함. `ThreadLocal`로 데이터를 관리하는 방식이 다음과 같았기 때문.
 
