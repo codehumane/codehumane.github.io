@@ -3,6 +3,7 @@ blockquote {
   font-style: italic;
   margin-left: $space-1;
   padding: $space-1;
+  overflow-wrap: break-word;
 }
 
 blockquote footer {
