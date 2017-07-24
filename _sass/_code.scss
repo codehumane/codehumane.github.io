@@ -5,6 +5,7 @@ pre code {
   background-color: #fafafa;
   padding: 0.0em;
   border-radius: 5px;
+  overflow-wrap: normal;
 }
 
 code {
@@ -14,6 +15,7 @@ code {
   border-radius: 3px;
   padding: 0.1em;
   background-color: #efefff;
+  overflow-wrap: break-word;
 }
 
 .highlight .p {
