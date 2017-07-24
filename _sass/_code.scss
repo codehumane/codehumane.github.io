@@ -1,16 +1,19 @@
 pre,
 pre code {
+  font-size: 15px;
   border: 0px solid #cfcfcf;
   background-color: #fafafa;
+  padding: 0.0em;
   border-radius: 5px;
 }
 
 code {
   color: rgba(0, 10, 19, 0.8);
-  font-size: 15px;
+  font-size: 14px;
   border: 1px solid #cfcfcf;
   border-radius: 3px;
-  background-color: #eef;
+  padding: 0.1em;
+  background-color: #efefff;
 }
 
 .highlight .p {
