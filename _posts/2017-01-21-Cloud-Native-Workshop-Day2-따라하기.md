@@ -118,7 +118,7 @@ docker run --name cna-graphite -p 80:80 -p 2003:2003 -p 8125:8125/udp hopsoft/gr
 - 다음 단계에 등장하는 GraphiteReporter @Bean을 위해 graphite 접근 정보를 환경 변수에 설정
 - 우선 `$DOCKER_IP`를 구함
     + 이게 뭘까를 잠시 고민. graphite에 접근하기 위한 IP로 예상되며, 아래 명령어를 통해 IP 획득
-    + `docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}} cna-graphite`
+    + `docker inspect -f {{range .NetworkSettings.Networks}}{{IPAddress}}{{end}} cna-graphite`
     + `172.17.0.2`인 것을 확인
     + 하지만 다시 생각해 보면, docker 실행 시 포트 매핑을 사용하므로 `localhost(127.0.0.1)`을 지정해 주면 됨
 - 그리고 나서 `GRAPHITE_HOST` 및 `GRAPHITE_PORT`를 설정
