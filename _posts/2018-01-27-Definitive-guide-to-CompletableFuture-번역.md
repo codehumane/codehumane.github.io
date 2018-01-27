@@ -105,4 +105,128 @@ CompletableFuture<Double> f3 =
 
 ## 완료 시 코드 실행 (thenAccept/thenRun)
 
-계속 번역 중.
+```java
+CompletableFuture<Void> thenAccept(Consumer<? super T> block);
+CompletableFuture<Void> thenRun(Runnable action);
+```
+
+이 두 메소드는 퓨처 파이프라인에서의 전형적인 "마지막" 단계이다. 이들은 퓨처 결과가 구해지면, 소비할 수 있게 도와준다. `thenAccept()`는 그 마지막 값을 제공하지만, `thenRun`은 `Runnable`을 실행, 즉 연산 결과에 접근이 불가하다.
+
+```java
+future.thenAcceptAsync(db1 -> log.debug("Result: {}", db1), executor);
+log.debug("Continuing");
+```
+
+`…Async`의 변형들은 두 메소드에 대해서도 제공된다. 또한, `executor`를 인자로 받는 것도 있고 받지 않는 것도 있다. 여기서 중요한 것은 `thenAccept()/thenRun()` 메소드가 블럭킹을 일으키지 않는다는 점이다(명시적으로 `executor`가 없다고 하더라도 말이다). 이들을 마치 퓨처에 할당된 이벤트 리스너/핸들러처럼 여기길 바란다. 그리고 곧 실행될 것이다. 물론, "Continuing" 메시지가 먼저, 그리고 즉각적으로 나타난다. `future`가 아무리 빨리 완료된다고 하더라도 말이다.
+
+## 단일 CompletableFuture의 에러 핸들링
+
+지금까지 우리는 연산 결과에 대해서만 살펴보았다. 예외는 어떻게 해야 할까? 이들 역시 비동기로 다룰 수 있을까? 물론이다!
+
+```java
+CompletableFuture<String> safe =
+  future.exeptionally(ex -> "We have a problem: " + ex.getMessage());
+```
+
+`exceptionally()`에서 인자로 취한 함수는 `future`가 예외를 던질 때 실행된다. 여기서 이 예외를 다시 `Future`의 타입과 호환되는 값으로 변환할 수 있다. `safe`의 이어지는 변환에는 예외가 전파되는 대신 함수가 반환하는 문자열을 받게 된다.
+
+좀 더 유연한 접근법은 `handle()`을 사용하는 것이다. 이는 정상적인 결과와 예외 모두를 인자로 받는다.
+
+```java
+CompletableFuture<Integer> safe = future.handle((ok, ex) -> {
+  if (ok != null) {
+    return Integer.parseInt(ok);
+  } else {
+    log.warn("Problem", ex);
+    return -1;
+  }
+});
+```
+
+`handle()`은 항상 호출되며, 정상적인 결과나 예외 인자 둘 중 하나는 널값이 아니다. 결국, 한 번에 캐치하는 전략이다.
+
+## 두 개의 CompletableFuture 조합
+
+한 개의 `CompletableFuture`를 비동기로 처리하는 것이 멋지긴 하지만, 다수의 퓨처가 다양한 방식으로 조합될 때 더 큰 힘을 발휘한다.
+
+### 두 개의 퓨처 조합/체이닝 (thenCompose())
+
+퓨처의 값에 대해 실행되지만, 반환되는 값이 퓨처인 경우가 있다. `CompletableFuture`는 충분히 똑똑해서, 함수의 결과를 `CompletableFuture<CompletableFuture<T>>`로 반환하는 대신, 최상위 레벨의 퓨처를 반환해 줄 수 있다. 그런 측면에서 `thenCompose()` 메소드는 스칼라에서의 `flatMap`과 동등하다.
+
+```java
+<U> CompletableFuture<U> thenCompose(Function<? super T, CompletableFuture<U>> fn);
+```
+
+아래의 예제에서는 `calculateRelevance()` 함수가 적용되는 부분에서, `thenApply()(map)`과 `thenCompose()(flatMap)`의 차이, 그리고 타입들을 유심히 살펴보라. 물론 `thenCompose`에도 `…Async` 변형이 존재한다.
+
+```java
+CompletableFuture<Document> docFuture = //...
+CompletableFuture<CompletableFuture<Double>> f =
+  docFuture.thenApply(this::claculateRelevance);
+CompletableFuture<Double> relevanceFuture =
+  docFuture.thenCompose(this::calculateRelevance);
+
+private CompletableFuture<Double> calculateRelevance(Document doc) // ...
+```
+
+`thenCompose()`는 튼튼한 비동기 파이프라인을 만들 때 필수적인 메소드이다. 중간 단계들을 기다리거나 블럭킹 시키지 않으면서 말이다.
+
+### 두 개의 퓨처를 변환하기 (thenCombine())
+
+`thenCompose`가 하나의 퓨처를 다른 의존 퓨처에 체이닝하는데 사용되는 한편, `thenCombine`은 두 개의 독립적인 퓨처를 결합(두 개 모두 완료되면)해준다.
+
+```java
+<U,V> CompletableFuture<V> thenCombine(CompletableFuture<? extends U other, BiFunction<? super T,? super U,? extends V> fn);
+```
+
+두 개의 `CompletableFuture`가 있다고 상상해보자. 하나는 `Customer`를 불러오고 다른 하나는 가까운 `Shop` 정보를 불러온다. 이들은 서로 독립적으로 완료되지만, 둘 모두가 완료되면, 이들의 값을 `Route` 계산하는데 활용하고 싶다. 여기 그 예제가 있다.
+
+```java
+CompletableFuture<Customer> customerFuture = loadCustomerDetails(123);
+CompletableFuture<Shop> shopFuture = closestShop();
+CompletableFuture<Route> routeFuture = 
+  customerFuture.thenCombine(shopFuture, (cust, shop) -> findRoute(cust, shop));
+
+//...
+ 
+private Route findRoute(Customer customer, Shop shop) //...
+```
+
+Java 8에서는 `(cust, shop) -> findRoute(cust, shop)`을 `this::findRoute` 메소드 레퍼런스로 단순화할 수 있다.
+
+```java
+customerFuture.thenCombine(shopFuture, this::findRoute);
+```
+
+### 두 개의 CompletableFuture가 모두 완료되기를 기다리기
+
+새로운 `CompletableFuture`를 만들어 두 개의 결과를 조합하는 대신, 작업이 완료되면 통지받는 간단한 방법도 있다. 이 경우 `thenAcceptBoth()/runAfterBot()` 등의 메소드를 사용한다. `thenAccept()`와 `thenRun()`과 유사하지만 한 개 대신 두 개의 퓨처를 기다린다.
+
+```java
+<U> CompletableFuture<Void> thenAcceptBoth(CompletableFuture<? extends U> other, BiConsumer<? super T,? super U> block);
+CompletableFuture<Void> runAfterBoth(CompletableFuture<?> other, Runnable action);
+```
+
+앞선 예제에서 처럼, 새로운 `CompletableFuture<Route>`를 만드는 대신, 즉각적으로 이벤트 전송이나 GUI 리프레시 등을 하고 싶을 수 있다. `thenAcceptBoth`를 이용하면 쉽다.
+
+```java
+customerFuture.thenAcceptBoth(shopFuture, (cust, shop) -> {
+  final Route route = findRoute(cust, shop);
+  //refresh GUI with route
+});
+```
+
+이렇게 묻는 사람들이 있을지도 모르겠다. "두 퓨처를 간단히 블럭시키면 되지 않을까?" 아래처럼 말이다.
+
+```java
+Future<Customer> customerFuture = loadCustomerDetails(123);
+Future<Shop> shopFuture = closestShop();
+findRoute(customerFuture.get(), shopFuture.get());
+```
+
+물론 가능한 일이다. 하지만 `CompletableFuture`를 사용하는 것은 비동기적으로, 이벤트 주도 프로그래밍 모델을 사용하기 위함이다. 블럭킹되거나 성급하게 결과를 기다리지 않고 말이다. 따라서, 위 2개의 코드 블럭은 동등하긴 하나, 후자의 것은 불필요하게 스레드의 실행을 점유해 버린다.
+
+## 첫 번째 CompletableFuture가 완료되기를 기다리기
+
+작성중.
+
