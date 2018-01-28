@@ -171,7 +171,7 @@ private CompletableFuture<Double> calculateRelevance(Document doc) // ...
 
 `thenCompose()`는 튼튼한 비동기 파이프라인을 만들 때 필수적인 메소드이다. 중간 단계들을 기다리거나 블럭킹 시키지 않으면서 말이다.
 
-### 두 개의 퓨처를 변환하기 (thenCombine())
+### 두 개의 퓨처 변환 (thenCombine())
 
 `thenCompose`가 하나의 퓨처를 다른 의존 퓨처에 체이닝하는데 사용되는 한편, `thenCombine`은 두 개의 독립적인 퓨처를 결합(두 개 모두 완료되면)해준다.
 
@@ -226,7 +226,64 @@ findRoute(customerFuture.get(), shopFuture.get());
 
 물론 가능한 일이다. 하지만 `CompletableFuture`를 사용하는 것은 비동기적으로, 이벤트 주도 프로그래밍 모델을 사용하기 위함이다. 블럭킹되거나 성급하게 결과를 기다리지 않고 말이다. 따라서, 위 2개의 코드 블럭은 동등하긴 하나, 후자의 것은 불필요하게 스레드의 실행을 점유해 버린다.
 
-## 첫 번째 CompletableFuture가 완료되기를 기다리기
+## 먼저 완료되는 CompletableFuture 기다리기
 
-작성중.
+`CompletableFuture`는 다수의 퓨처 중 가장 먼저 완료된 것의 결과를 받을 수도 있다. 결과 타입이 동일한 두 개의 작업이 있고, 어떤 작업이 먼저 끝나는지 보다 응답 시간이 중요할 때, 이 기능이 유용할 수 있다.
+
+```java
+CompletableFuture<Void> acceptEither(CompletableFuture<? extends T> other, Consumer<? super T> block);
+CompletableFuture<Void> runAfterEither(CompletableFuture<?> other, Runnable action);
+```
+
+두 개의 시스템을 통합해야 한다고 가정해보자. 하나는 빠른 평균 응답 시간을 가지지만 들쭉 날쭉하고, 다른 하나는 느리지만 일관된 응답 시간을 가진다. 이 때 취할 수 있는 한 가지 방법이 있다. 둘을 동시에 호출한 뒤 하나가 완료되길 기다리는 것이다. 일반적으로는 첫 번째가 그 대상이 되고, 다소 느려지더라도 두 번째 작업에 의해 예측 가능한 수준에서 완료된다.
+
+```java
+CompletableFuture<String> fast = fetchFast();
+CompletableFuture<String> predictable = fetchPredictably();
+fast.acceptEither(predictable, s -> {
+  System.out.println("Result: " + s);
+});
+```
+
+여기서 `s`는 `fetchFast()` 혹은 `fetchPredictably()`의 결과 문자열이다. 그게 누군지는 알 수도 없고 신경쓰지도 않는다.
+
+### 먼저 완료된 결과 변환
+
+`applyToEither()`는 `acceptEither()`의 형이다. 후자는 퓨처의 결과를 소비하는 반면, `applyToEither()`는 새로운 퓨처를 반환한다. 그리고 마찬가지로, 두 개의 퓨처 중 하나라도 완료되면 함께 완료된다.
+
+```java
+<U> CompletableFuture<U> applyToEither(CompletableFuture<? extends T> other, Function<? super T,U> fn);
+```
+
+`fn` 함수는 먼저 완료된 퓨처의 결과에 대해 실행된다. 필자 개인적으로는 이 특수화된 메소드의 목적을 모르겠다. 다음과 같이 쉽게 사용할 수 있는 방법이 있는데도 말이다.
+
+```java
+fast.applyToEither(predictable).thenApply(fn);
+```
+
+API에 명시되어 있긴 하지만, 실제로 필요로 하지는 않으므로, 단순히 `Function.identity()`라는 표시자를 사용했다.
+
+```java
+CompletableFuture<String> fast = fetchFast();
+CompletableFuture<String> predictable = fetchPredictably();
+CompletableFuture<String> firstDone =
+  fast.applyToEither(predictable, Function.<String>identity());
+```
+
+`firstDone` 퓨처는 이제 다른 사용자에게 전달되고, 사용자는 두 개의 퓨처가 숨겨져 있다는 사실을 모른다. 단지 퓨처가 완료되길 기다릴 뿐이다. `applyToEither()`만이 먼저 끝나는 퓨처로부터 결과를 전달 받는다.
+
+## 다수의 CompletableFuture 조합
+
+두 개의 퓨처가 완료되길 기다리는 법(`thenCombine()`), 그리고 둘 중에 먼저 완료되는 퓨처만을 기다리는 법(`applyToEither()`)도 알았다. 하지만 더 많은 퓨처에 대해서는 어떻게 해야 할까? 이 때 아래의 `static` 헬퍼 메소드를 사용할 수 있다.
+
+```java
+static CompletableFuture<Void> allOf(CompletableFuture<?>... cfs);
+static CompletableFuture<Object> anyOf(CompletableFuture<?>... cfs);
+```
+
+`allOf()`는 퓨처를 배열로 받고 한 개의 퓨처를 반환한다. 그리고 배열로 받은 모든 퓨처가 완료될 때, 반환된 퓨처도 완료된다. 한편, `anyOf()`는 배열로 받은 퓨처 중 하나라도 먼저 완료되면, 반환된 퓨처를 완료시킨다. 반환된 퓨처의 제너릭 타입에 주목하라. 아마도 당신이 기대한 것은 아니었을 것이다. 다음 글에서 이 이슈에 대해 다룰 것이다.
+
+## 번역을 마치며
+
+원문서가 워낙 설명을 잘해줘서 종종 잊곤 했지만, `CompletableFuture`가 그리 직관적인 API를 제공하고 있다고 생각되지 않는다. 다른 비동기 API들이 상대적으로 익히고 사용하기에 쉬웠기 때문이다. 물론, 역량 부족일 수도 있고, 제대로 API를 살펴보지 않아서 그럴 수도 있다. 그 외에도 얼마든지 이유가 있겠지만, 어쨌든 당분간은 약간의 의구심과 함께 익히고 사용하려 한다. 자, 여기까지가 끝이다. 참으로 어색한 급 마무리지만, 공부가 목적인 번역이었으니, 이대로 그냥 끝맺음을 :)
 
