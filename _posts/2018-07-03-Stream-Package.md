@@ -113,5 +113,56 @@ List<String> results =
 
 ## Reduction operations
 
-재밌게 읽었던 부분은 바로 이 Reduction operations. 이어서 정리 예정.
+*reduction*(*fold*라고 불리기도 함) 연산은 일련의 입력 엘리먼트들을 받고, 이들을 결합하여 하나의 요약된 결과로 만듦. 요약된 결과란, 엘리먼트들의 합이나 최대값을 구하거나, 리스트 형태로 모아주거나 하는 것을 가리킴. 일반화된 reduction 연산인 [reduce()](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#reduce-java.util.function.BinaryOperator-), [collect()](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Stream.html#collect-java.util.stream.Collector-)을 이용하거나, 좀 더 특화된 [sum()](https://docs.oracle.com/javase/8/docs/api/java/util/stream/IntStream.html#sum--), [max()](https://docs.oracle.com/javase/8/docs/api/java/util/stream/IntStream.html#max--), [count()](https://docs.oracle.com/javase/8/docs/api/java/util/stream/IntStream.html#count--) 등을 사용할 수도 있음.
 
+```java
+int sum = 0;
+for (int x: numbers)
+    sum += x;
+
+int sum = numbers.stream().reduce(0, (x,y) -> x+y);
+int sum = numbers.stream().reduce(0, Integer::sum);
+```
+
+위 구현은 같은 결과를 만들어내는 서로 다른 구현. 하나는 mutative accumulation, 다른 하나는 reduce operation을 이용한 것. reduce operation이 상대적으로 가지는 이점은 2가지. 개별 엘리먼트에 대해서가 아니라 스트림 전체에 대한 연산이라는 점에서 좀 더 추상적이고, 또 `parallelStream` 추가만으로 병렬화가 가능함(단, associative이면서 stateless인 함수일 때만 가능).
+
+### General form of *reduce*
+
+reduce 연산의 가장 일반화된 형태는 3개의 파라미터를 받는 것.
+
+```java
+<U> U reduce(U identity,
+             BiFunction<U, ? super T, U> accumulator,
+             BinaryOperator<U> combiner);
+```
+
+각 인자에 대한 설명은 아래와 같음.
+
+- **identity**
+  - reduction을 위한 최초 시드 값이자, 아무 입력 값이 없는 경우의 기본값.
+  - identity의 값은 combiner 함수의 identity여야 함. 즉, 모든 `u`에 대해 `combiner.apply(identity, u) == u` 가 보장돼야 함.
+- **accumulator**
+  - partial 결과와 다음 엘리먼트를 받고, 새로운 partial 결과를 만들어 냄.
+- **combiner**
+  - 2개의 partial 결과를 결합하여 새로운 partial 결과를 만듦. (병렬 reduction에 필수)
+  - associative 이어야 하며, `accumulator` 함수와 호환되어야 함. 즉, 모든 `u` 와 `t`에 대해, `combiner.apply(u, accumulator.apply(identity, t))`가 `accumulator.apply(u, t)`에 `equals()`가 성립되어야 함.
+
+이런 3개 인자를 받는 함수는 2개 인자를 받는 함수에 비해 일반화 된 형태이며, mapping 단계를 accumulation 단계로 통합시킨다. 아래는 이 둘에 대한 비교 사례.
+
+```java
+int sum = widgets.stream()
+                 .filter(b -> b.getColor() == RED)
+                 .mapToInt(b -> b.getWeight())
+                 .sum();
+
+int sumOfWeights = widgets.stream()
+                          .reduce(0,
+                                  (sum, b) -> sum + b.getWeight())
+                                  Integer::sum);
+```
+
+map-reduce 형태가 더 가독성이 좋으며, 따라서 일반적으로 더 선호되어야 함. 위에서 이야기한 것처럼, mapping과 reducing을 한 곳에서 해야 하는 경우에는 3개 인자 형태를 사용.
+
+### Mutable *reduction*
+
+계속 작성중.
