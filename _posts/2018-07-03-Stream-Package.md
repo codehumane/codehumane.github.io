@@ -163,6 +163,88 @@ int sumOfWeights = widgets.stream()
 
 map-reduce 형태가 더 가독성이 좋으며, 따라서 일반적으로 더 선호되어야 함. 위에서 이야기한 것처럼, mapping과 reducing을 한 곳에서 해야 하는 경우에는 3개 인자 형태를 사용.
 
-### Mutable *reduction*
+### Mutable reduction
 
-계속 작성중.
+*mutable reduction operation*은 입력 엘리먼트들을 가변 결과 컨테이너<sup>mutable result container</sup>로 모음. `Collection`, `StringBuilder`와 같은 것이 그 예.
+
+```jav
+String concatenated = strings.reduce("", String::concat);
+```
+
+만약, 문자열들의 스트림을 하나의 긴 문자열로 만들고 싶다면 위와 같이 할 수 있음. 이는 심지어 병렬 작업에서도 잘 동작함. 하지만, 성능 면에서는 좋지 못함. 문자열의 갯수를 n이라고 할 때, 실행 시간이 O(n^2)라고 한다. `StringBuilder`로 결과를 모아주는 것이 성능 면에서 유리.
+
+mutable reduction operation은 `collect()`라고 불림. 원하는 결과를 `Collection`과 같은 컨테이너로 모아주기 때문. 이 연산은 3개의 함수를 필요로 함.
+
+- supplier: 결과 컨테이너 인스턴스 생성.
+- accumulator: 입력 엘리먼트를 결과 컨테이너로 통합.
+- combiner: 결과 컨테이너들을 하나로 병합.
+
+`reduce()` 와 마찬가지로, collect를 이렇게 추상적인 방식으로 표현하게 되면 병렬화에 용이함. 물론, accumulator와 combiner가 associativity 등을 만족시켜야 하겠지만 말이다. 아래는 엘리먼트들을 문자열로 변환하여 `ArrayList`로 모으는 과정을 다양한 형태로 구현한 것.
+
+```java
+// for-each 형식을 활용한 문자열 모으기
+ArrayList<String> strings = new ArrayList<>();
+for (T element : stream)
+    strings.add(element.toString());
+
+// 쉽게 병렬화 할 수 있는 형태
+ArrayList<String> strings = stream
+    .collect(() -> new ArrayList<>(),
+             (c, e) -> c.add(e.toString()),
+             (c1, c2) -> c1.addAll(c2));
+
+// mapping 연산을 accumulator로부터 분리
+List<String> strings = stream
+	.map(Object::toString)
+	.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+
+// Collector를 이용한 축약 버전
+List<String> strings = stream
+	.map(Object::toString)
+    .collect(Collectors.toList());
+```
+
+표준 Collector를 이용하면 결합성<sup>composability</sup>라는 이점을 추가로 얻을 수 있음. [`Collectors`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collectors.html)가 컬렉터를 위해 사전 정의된 여러 팩토리를 가지고 있기 때문. 아래는 그 예시.
+
+```java
+Collector<Employee, ?, Integer> summingSalaries
+	= Collectors.summingInt(Employee::getSalary);
+
+Map<Department, Integer> salariesByDept = employees
+	.stream()
+    .collect(Collectors
+    	.groupingBy(Employee::getDepartment, summingSalaries));
+```
+
+참고로, 위 코드에서 ? 기호가 사용된 것은 우리가 이 타입에 대해 관심 없음을 드러냄.
+
+### Reduction, concurrency, and ordering
+
+`Map`을 만들어내는 `collect()`와 같이 일부 복잡한 reduction 연산에서는 병렬화로 얻는 성능 상의 이점이 줄어들 수 있음. 일부 `Map` 구현체들에서는 combining 단계(2개의 `Map`을 키를 이용해 병합시키는)가 비용이 많이 들기 때문. 하지만, `ConcurrentHashMap`와 같이, 동시에 수정 가능한 결과 컨테이너라면, 하나의 공유된 컨테이너를 사용하게 되므로, 병합 절차가 필요 없게 됨.
+
+이처럼 concurrent reduction을 지원하는 `Collector`들은 [`Collector.Characteristics.CONCURRENT`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html) 값을 통해 알 수 있음.
+
+> Indicates that this collector is *concurrent*, meaning that the result container can support the accumulator function being called concurrently with the same result container from multiple threads.
+
+또한, 순서가 무시될 수 있으므로, 순서가 중요하지 않은 스트림을 처리할 때만 concurrent reduction이 가능. (스트림이 unordered이거나, [`Collector.Characteristics.UNORDERED`](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collector.Characteristics.html#UNORDERED)를 가지는 경우에 해당)
+
+```java
+Map<Buyer, List<Transaction>> salesByBuyer
+    = txns.parallelStream()
+        .unordered()
+        .collect(groupingByConcurrent(Transaction::getBuyer));
+```
+
+### Associativity
+
+`op`가 다음과 같다면 *associative*라고 할 수 있다.
+
+```
+(a op b) op c == a op (b op c)
+```
+
+associative operation의 예로는 덧셈, 최소값 또는 최대값 구하기, 문자열 연결 등이 있음. 뺄셈은 이런 결합 법칙이 성립하지 않음.
+
+## 정리하며
+
+어느 정도 안다고 생각했지만, 막상 전체를 정리하고 보니, 새로 알게 된 내용들이 있음. concurrent reduction를 위해 알고 있어야 하는 것, general form of reduce가 왜 필요한지 등. 그리고 스트림과 컬렉션의 차이 처럼, 암묵지가 형식지가 되는 경험도 있었고. 모름에는 끝이 없구나.
