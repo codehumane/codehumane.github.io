@@ -195,12 +195,12 @@ ArrayList<String> strings = stream
 
 // mapping 연산을 accumulator로부터 분리
 List<String> strings = stream
-	.map(Object::toString)
-	.collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
+    .map(Object::toString)
+    .collect(ArrayList::new, ArrayList::add, ArrayList::addAll);
 
 // Collector를 이용한 축약 버전
 List<String> strings = stream
-	.map(Object::toString)
+    .map(Object::toString)
     .collect(Collectors.toList());
 ```
 
@@ -208,12 +208,12 @@ List<String> strings = stream
 
 ```java
 Collector<Employee, ?, Integer> summingSalaries
-	= Collectors.summingInt(Employee::getSalary);
+    = Collectors.summingInt(Employee::getSalary);
 
 Map<Department, Integer> salariesByDept = employees
-	.stream()
+    .stream()
     .collect(Collectors
-    	.groupingBy(Employee::getDepartment, summingSalaries));
+        .groupingBy(Employee::getDepartment, summingSalaries));
 ```
 
 참고로, 위 코드에서 ? 기호가 사용된 것은 우리가 이 타입에 대해 관심 없음을 드러냄.
