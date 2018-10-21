@@ -2,7 +2,7 @@
 layout: post
 title: DDIA (Partitioning)
 summary: Designing Data-Intensive Application 책에서 Partitioning 부분을 따로 정리.
-date: 2018-10-13 00:00:01 +0900
+date: 2018-10-20 00:00:01 +0900
 ---
 
 # Partitioning
@@ -23,21 +23,21 @@ date: 2018-10-13 00:00:01 +0900
 
 1. 데이터를 파티션에 무작위로 연결시킬 수 있음.
 2. 이렇게 하면 데이터가 고르게 분배될 것.
-3. 그러나, 이렇게 되면 데이터를 찾기 위해 매번 모든 노드에 질의를 던져야 함.
+3. 그러나, 데이터를 찾기 위해 매번 모든 노드에 질의해야 함.
 4. 지연시간 증폭 등의 문제가 있어 비효율적.
 
 ### Key Range
 
 1. 백과사전이 알파벳 기준으로 여러 권으로 나뉘듯,
-2. 타임스탬프 등을 기준으로 연속적인 구간을 나누어 파티션에 데이터를 할당.
+2. 타임스탬프 등의 키를 기준으로 연속적인 구간을 나누어 노드에 대응.
 3. 예를 들어, 2016년 데이터는 1번 노드, 2017년은 2번, 2018년은 3번, ...
 4. 이렇게 하면, 데이터가 어느 노드에 속하는지 알고, 노드를 지정해서 질의할 수 있음.
-5. 다만, 시간이 지나면서 점점 불균형이 생길 수도.
+5. 다만, 시간이 지나면서 점점 불균형이 생길 수 있음.
 6. 예를 들어, 2018년 7월에 사용자가 급증 → 특정 노드가 *hot spot*이 됨.
 
 ### Hash of Key
 
-1. 이런 skew와 hot spot을 극복하고자 해시 함수를 많이 사용.
+1. 이런 불균형을 극복하고자 해시 함수를 많이 사용.
 2. 이 접근법에 대한 설명은 "[Partitioning by hash of key](https://www.safaribooksonline.com/library/view/designing-data-intensive-applications/9781491903063/assets/ddia_0603.png)" 그림을 참고.
 3. 만약, 32 비트의 해시 함수를 사용하고, 파티션이 8개라면, 해시 값을 2^29 단위로 나눌 수 있을 것.
 4. 0 ≤ hash(key) < b0, b0 ≤ hash(key) < b1, ...
@@ -46,10 +46,8 @@ date: 2018-10-13 00:00:01 +0900
 참고로, 해시 함수를 선택할 때의 고려사항은 아래와 같음.
 
 1. 먼저, 암호화 수준이 높을 필요는 없음.
-2. 그리고 `Object#hashCode` 등 프로그래밍 언어에서 제공하는 해시 함수는 주의.
-3. 같은 값에 대한 해싱 결과가 달라질 수 있기 때문.
-4. [Java's hashCode is not safe for distributed system](https://martin.kleppmann.com/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html) 함께 참고.
-5. MongoDB는 MD5, Cassandra는 Murmur3, Vodemort는 Fowler-Noll-Vo를 해싱 함수로 사용.
+2. 그리고 `Object#hashCode` 등 프로그래밍 언어에서 제공하는 해시 함수는 주의. 같은 값에 대한 해싱 결과가 달라질 수 있기 때문. [Java's hashCode is not safe for distributed system](https://martin.kleppmann.com/2012/06/18/java-hashcode-unsafe-for-distributed-systems.html) 함께 참고.
+3. MongoDB는 MD5, Cassandra는 Murmur3, Vodemort는 Fowler-Noll-Vo를 해싱 함수로 사용.
 
 또한, 범위 검색 문제에 대한 데이터베이스 별 대응은 아래와 같음.
 
@@ -64,7 +62,7 @@ date: 2018-10-13 00:00:01 +0900
 3. 결국, 애플리케이션에서 직접 문제를 다뤄야 함.
 4. 책에서는 hot spot을 일으키는 주요 키를 따로 관리하고,
 5. 이 키에 한해서만 별도의 라우팅을 하라고 이야기 함.
-6. 모든 키에 대해 이런 작업을 하는 것은 부담이므로.
+6. 모든 키에 대해 이런 작업을 하는 것은 부담.
 
 ## Partitioning and Secondary Indexes
 
@@ -91,7 +89,7 @@ date: 2018-10-13 00:00:01 +0900
 1. 문서 대신 용어<sup>term</sup> 별로 인덱스를 파티셔닝하는 것. 글로벌 인덱스.
 2. "[Partitioning secondary indexes by term](https://www.safaribooksonline.com/library/view/designing-data-intensive-applications/9781491903063/assets/ddia_0605.png)" 그림을 보면 이해가 쉬움.
 3. 참고로, 용어는 문서에 존재하는 단어를 가리킴. 그러니까, 인덱싱의 후보들.
-4. 파티션의 기준은 2가지.
+4. 파티셔닝의 기준은 2가지.
    - 용어를 정렬한 뒤 구간 별로 나누어 파티셔닝 하거나(범위 검색이 쉬움).
    - 해싱 값을 기준으로 파티셔닝(고르게 분산됨).
 5. 글로벌 인덱스에서는 모든 파티션에 매번 질의를 하지 않으므로 효율적.
@@ -170,6 +168,6 @@ date: 2018-10-13 00:00:01 +0900
 2. 라우팅 계층(partition-aware load balancer)이 따로 존재.
 3. 클라이언트가 어느 노드에 파티션이 할당되어 있는지를 미리 파악. 혹은 규칙을 가지거나.
 
-## 마무리
+## 마치며
 
 간단히 Replication과 Partitioning에 대해 살펴봄. 책을 통해, 잘 몰랐던 부분까지 전반적으로 알게 되어 너무 좋았음. 하지만, 책은 책일 뿐이라는 것을 또한 느끼게 됨. 책에서 문제라고 했지만, 실제 업무에서는 문제가 되지 않기도 하고, 현업에서 사용했던 방식이 책에서는 아예 다뤄지지 않기도 함. 매번 느끼는 거지만, 결국 애플리케이션의 특성을 잘 파악해야, 이런 지식도 의미있다고 느껴짐. 그럼에도 불구하고 재미있고 의미 있던 책.
