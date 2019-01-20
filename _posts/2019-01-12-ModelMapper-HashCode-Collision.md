@@ -179,7 +179,9 @@ final Node<K,V> getNode(int hash, Object key) {
 }
 ```
 
-## 01/12 업데이트
+## 업데이트
 
-[간단한 테스트 코드와 함께 PR도 제출](https://github.com/modelmapper/modelmapper/pull/438). 잘 돼서, 서비스 운영의 번거로움을 덜 수 있기를.
+1. 01/12: [간단한 테스트 코드와 함께 PR도 제출](https://github.com/modelmapper/modelmapper/pull/438). 잘 돼서, 서비스 운영의 번거로움을 덜 수 있기를.
+2. 01/20: merged!!
 
+![github merged history](/images/2019-01-12-ModelMapper-HashCode-Collision/01-merged.png)
