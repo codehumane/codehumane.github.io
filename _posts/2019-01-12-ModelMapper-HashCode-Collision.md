@@ -1,7 +1,7 @@
 ---
 layout: post
-title: ModelMapper 해시코드 충돌
-summary: ModelMapper에서 발견한 결함과 이에 대한 간단한 생각
+title: ModelMapper 해시코드 충돌과 오픈 소스 기여
+summary: ModelMapper에서 발견한 결함과 생각, 그리고 오픈 소스 기여까지
 date: 2019-01-12 00:00:01 +0900
 ---
 
