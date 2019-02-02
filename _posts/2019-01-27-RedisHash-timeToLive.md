@@ -116,3 +116,99 @@ public class BookRepresentation {
 ## 생각
 
 `@RedisHash`의 keySpace 설정부분에 약간의 설명을 달아줬으면 어땠을까 하는 아쉬움. 아니면, 형식에 대한 유효성 검증을 넣어주던가. 혹은 경고 로그라도. 아니면, `BinaryKeyspaceIdentifier`의 구현시, `@RedisHash`의 `keySpace`에 명시된 값을 참고했다면 어땠을까.
+
+## 주의
+
+TTL을 사용하려면 2가지를 주의해야 함.
+
+1. `@EnableRedisRepositories`의 [`enableKeyspaceEvents`](https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/repository/configuration/EnableRedisRepositories.html#enableKeyspaceEvents--) 활성화 필요함.
+2. [Redis Keyspace Notifications](https://redis.io/topics/notifications) 값 설정이 되어 있지 않거나, 적어도 `Ex`를 포함한 상태로 설정되어 있어야 함.
+
+`@EnableRedisRepositories`에는 `enableKeyspaceEvents` 속성이 존재. 기본 값은 OFF. TTL을 사용하려면 이 값을 ON_STARTUP 또는 ON_DEMAND 로 설정해야 함. 이렇게 하면, [`RedisKeyValueAdapter#initKeyExpirationListener`](https://github.com/spring-projects/spring-data-redis/blob/master/src/main/java/org/springframework/data/redis/core/RedisKeyValueAdapter.java#L706)이 실행되면서 [`MappingExpirationListener`](https://github.com/spring-projects/spring-data-redis/blob/master/src/main/java/org/springframework/data/redis/core/RedisKeyValueAdapter.java)를 등록하게 되고, 이 리스너는 다음의 2가지 일을 수행.
+
+1. `notify-keyspace-events` 값을 적절히 설정.
+2. 레디스가 보내준 expired 이벤트를 받아, 관련된 phantom, index, keyspace element 삭제.
+
+첫 번째 일은 [`KeyspaceEventMessageListener#init`](https://github.com/spring-projects/spring-data-redis/blob/master/src/main/java/org/springframework/data/redis/listener/KeyspaceEventMessageListener.java#L81)를 보면 된다.
+
+```java
+/**
+    * Initialize the message listener by writing requried redis config for {@literal notify-keyspace-events} and
+    * registering the listener within the container.
+    */
+public void init() {
+
+    if (StringUtils.hasText(keyspaceNotificationsConfigParameter)) {
+
+        RedisConnection connection = listenerContainer.getConnectionFactory().getConnection();
+
+        try {
+
+            Properties config = connection.getConfig("notify-keyspace-events");
+
+            if (!StringUtils.hasText(config.getProperty("notify-keyspace-events"))) {
+                connection.setConfig("notify-keyspace-events", keyspaceNotificationsConfigParameter);
+            }
+
+        } finally {
+            connection.close();
+        }
+    }
+
+    doRegister(listenerContainer);
+}
+```
+
+이 때의 `keyspaceNotificationsConfigParameter` 값은 `@EnableRedisRepositories`의 속성 값이며, 기본 값은 `Ex`. 이 값이 뭔지에 대해서는 [Redis Keyspace Notifications](https://redis.io/topics/notifications) 문서 참고.
+
+두 번째 일은 `MappingExpirationListener#onMessage`를 살펴보면 됨.
+
+```java
+/*
+    * (non-Javadoc)
+    * @see org.springframework.data.redis.listener.KeyspaceEventMessageListener#onMessage(org.springframework.data.redis.connection.Message, byte[])
+    */
+@Override
+public void onMessage(Message message, @Nullable byte[] pattern) {
+
+    if (!isKeyExpirationMessage(message)) {
+        return;
+    }
+
+    byte[] key = message.getBody();
+
+    byte[] phantomKey = ByteUtils.concat(key, converter.getConversionService().convert(KeyspaceIdentifier.PHANTOM_SUFFIX, byte[].class));
+
+    Map<byte[], byte[]> hash = ops.execute((RedisCallback<Map<byte[], byte[]>>) connection -> {
+
+        Map<byte[], byte[]> hash1 = connection.hGetAll(phantomKey);
+
+        if (!CollectionUtils.isEmpty(hash1)) {
+            connection.del(phantomKey);
+        }
+
+        return hash1;
+    });
+
+    Object value = converter.read(Object.class, new RedisData(hash));
+
+    String channel = !ObjectUtils.isEmpty(message.getChannel())
+            ? converter.getConversionService().convert(message.getChannel(), String.class) : null;
+
+    RedisKeyExpiredEvent event = new RedisKeyExpiredEvent(channel, key, value);
+
+    ops.execute((RedisCallback<Void>) connection -> {
+
+        connection.sRem(converter.getConversionService().convert(event.getKeyspace(), byte[].class), event.getId());
+        new IndexWriter(connection, converter).removeKeyFromIndexes(event.getKeyspace(), event.getId());
+        return null;
+    });
+
+    publishEvent(event);
+}
+```
+
+phantom 데이터를 지우고, keyspace의 엘리먼트 중 관련 키를 지우고, 인덱스 데이터를 지우고 있음. 마지막으로, `RedisKeyExpiredEvent`를 만들어 다른 곳으로 전파까지. 참고로 phantom 데이터의 존재 이유는 아래와 같음.
+
+> When the expiration is set to a positive value, the corresponding `EXPIRE` command is executed. In addition to persisting the original, a phantom copy is persisted in Redis and set to expire five minutes after the original one. This is done to enable the Repository support to publish `RedisKeyExpiredEvent`, holding the expired value in Spring’s `ApplicationEventPublisher`whenever a key expires, even though the original values have already been removed. Expiry events are received on all connected applications that use Spring Data Redis repositories.
+
