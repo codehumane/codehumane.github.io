@@ -16,7 +16,10 @@ public class BookRepresentation {
     
     @Id
     private final String isbn;
+    
+    @Indexed
     private final String title;
+    
     // ...
 }
 ```
@@ -28,6 +31,7 @@ public class BookRepresentation {
 1) "BookRepresentation:v1"
 2) "BookRepresentation:v1:9788992825764:phantom"
 3) "BookRepresentation:v1:9788992825764"
+4) "BookRepresentation:v1:title:hello"
 ```
 
 참고로, 여기서 각 키의 의미는 아래와 같음.
@@ -37,6 +41,7 @@ public class BookRepresentation {
 | BookRepresentation:v1:9788992825764         | 캐싱 대상 그 자체       |
 | BookRepresentation:v1:9788992825764:phantom | 캐싱 데이터의 복제본    |
 | BookRepresentation:v1                       | 캐시된 데이터의 키 집합 |
+| BookRepresentation:v1:title:hello           | 인덱스 데이터           |
 
 ttl을 15초로 설정해 두었으니, 15초가 지난 뒤 캐시 데이터를 살펴봄.
 
@@ -46,9 +51,12 @@ ttl을 15초로 설정해 두었으니, 15초가 지난 뒤 캐시 데이터를 
 
 127.0.0.1:6379> smembers BookRepresentation:v1
 1) "9788992825764"
+
+127.0.0.1:6379> smembers BookRepresentation:v1:title:hello
+1) "9788992825764"
 ```
 
-기대와 다르게 `BookRepresentation:v1`의 값이 지워지지 않음. 계속 쌓이기만 함. 여러가지 문제가 예상됨. (ㅠㅠ)
+기대와 다르게 `BookRepresentation:v1`, `BookRepresentation:v1:title:hello` 의 값이 지워지지 않음. 계속 쌓이기만 함. 여러가지 문제가 예상됨. (ㅠㅠ)
 
 ## 원인
 
@@ -66,7 +74,7 @@ ops.execute((RedisCallback<Void>) connection -> {
 publishEvent(event);
 ```
 
-[`RedisKeyExpiredEvent`](https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/RedisKeyExpiredEvent.html) 인스턴스를 생성한 뒤, 이로부터 아이디를 가져오고, [`RedisSetCommands#sRem`](https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/connection/RedisSetCommands.html#sRem-byte:A-byte:A...-)에 인자로 넘겨주고 있음. 이 메서드의 역할은 Redis의 [SREM 커맨드](https://redis.io/commands/srem) 참고. 그런데, 여기서의 아이디가 `BookRepresentation:v1`이 아니고, `BookRepresentation`임. 잘못된 키. 따라서, 제거되지 않음.
+[`RedisKeyExpireEvent#getId`](https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/RedisKeyExpiredEvent.html#getId--) 값을 [`RedisSetCommands#sRem`](https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/connection/RedisSetCommands.html#sRem-byte:A-byte:A...-)에 인자로 넘겨주고 있음. 메서드 역할은 [SREM 커맨드](https://redis.io/commands/srem) 참고. 그런데, 여기서의 아이디가 `BookRepresentation:v1`이 아니고, `BookRepresentation`임. 잘못된 키. 따라서, 제거되지 않음.
 
 왜 이렇게 예상과 다른 키를 반환하는지는 `BinaryKeyspaceIdentifier#extractId`를 보면 이유를 알 수 있음.
 
