@@ -179,12 +179,12 @@ product.getId().equals(salesProduct.getId()));
 
 그 외에도 아래 주제들이 인상 깊었음.
 
-- [No And's, Or's, Or But's](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#no-ands-ors-or-buts)
-- [Context Independence](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#context-independence)
-- [Value Types](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#value-types)
-- [Ports and Adapters](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#ports-and-adapters)
-- [Object Peer Stereotype](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#object-peer-stereotypes)
-- [Unit Testing the Collaborating Objects](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#unit-testing-the-collaborating-objects)
-- [Where Do Objects Come from?](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#where-do-objects-come-from)
-- [Identify Relationships with Interface](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#identify-relationships-with-interfaces)
-- [How Writing a Test First Helps the Design](https://github.com/codehumane/what-i-learned/blob/master/goosgt/README.md#how-writing-a-test-first-helps-the-design)
+- [No And's, Or's, Or But's](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#no-ands-ors-or-buts)
+- [Context Independence](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#context-independence)
+- [Value Types](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#value-types)
+- [Ports and Adapters](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#ports-and-adapters)
+- [Object Peer Stereotype](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#object-peer-stereotypes)
+- [Unit Testing the Collaborating Objects](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#unit-testing-the-collaborating-objects)
+- [Where Do Objects Come from?](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#where-do-objects-come-from)
+- [Identify Relationships with Interface](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#identify-relationships-with-interfaces)
+- [How Writing a Test First Helps the Design](https://github.com/codehumane/what-i-learned/blob/master/book/goosgt/README.md#how-writing-a-test-first-helps-the-design)
