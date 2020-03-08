@@ -1,58 +1,189 @@
-@charset "UTF-8";
-/*!
-
-Pixyll
-
-A simple, beautiful theme for Jekyll that emphasizes content rather than
-aesthetic fluff.
-
-Built upon BASSCSS (http://jxnblk.github.io/basscss).
-
-Crafted with <3 by John Otander (@4lpine) - ©2015 John Otander
-MIT License http://opensource.org/licenses/MIT
-
-*/
-
-html, body {
-  height: auto;
-  min-height: 100%;
+/**
+ * Reset some basic elements
+ */
+blockquote,
+body,
+dd,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+ol,
+p,
+pre,
+ul {
+    margin: 0;
+    padding: 0;
 }
-
-img {
-  max-width: 100%;
-}
-
-img[alt=one] {
-  width: 100px;
-}
-
-img[alt=two] {
-  width: 200px;
-}
-
-img[alt=three] {
-  width: 300px;
-}
-
-img[alt=four] {
-  width: 400px;
-}
-
-img[alt=five] {
-  width: 500px;
-}
-
-img[alt=six] {
-  width: 600px;
-}
-
-em img {
-  max-width: 100%;
-  margin-left: 0;
-}
-
+/**
+ * Basic styling
+ */
 body {
-          box-sizing: border-box;
-     -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+    font: $base-font-weight #{$base-font-size}/#{$base-line-height} $base-font-family;
+    color: $text-color;
+    background-color: $background-color;
+}
+/**
+ * Set `margin-bottom` to maintain vertical rhythm
+ */
+%vertical-rhythm,
+blockquote,
+dl,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+ol,
+p,
+pre,
+table,
+ul {
+    margin-bottom: $spacing-unit / 2;
+}
+/**
+ * Images
+ */
+img {
+    max-width: 100%;
+    vertical-align: middle;
+}
+/**
+ * Figures
+ */
+figure > img {
+    display: block;
+}
+
+figcaption {
+    font-size: $small-font-size;
+}
+/**
+ * Lists
+ */
+ol,
+ul {
+    margin-left: $spacing-unit;
+}
+
+li {
+     > ol,
+    > ul {
+        margin-bottom: 0;
+    }
+}
+/**
+ * Headings
+ */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: $base-font-weight;
+}
+/**
+ * Links
+ */
+a {
+    color: $link-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+/**
+ * Blockquotes
+ */
+blockquote {
+    color: $grey-color-dark;
+    padding-left: $spacing-unit / 2;
+    border-left: 2px solid $grey-color-light;
+    font-style: italic;
+    font-size: $small-font-size;
+
+    > :last-child {
+        margin-bottom: 0;
+    }
+}
+/**
+ * Code formatting
+ */
+code,
+pre {
+    background-color: #fcfcfc;
+}
+
+code {
+    padding: 1px 5px;
+    font-family: $code-font-family;
+    color: #f14e32;
+}
+
+pre {
+    padding: 8px 12px;
+    overflow-x: auto;
+    border: 1px solid $grey-color-light;
+
+    > code {
+        border: 0;
+        padding-right: 0;
+        padding-left: 0;
+        tab-size: 4;
+        color: inherit;
+    }
+}
+/**
+ * Table
+ */
+table {
+    width: 100%;
+    max-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+}
+
+td,
+th {
+    padding: 0.5rem;
+    line-height: inherit;
+}
+
+th {
+    text-align: left;
+    vertical-align: bottom;
+    border-bottom: 2px solid $grey-color-light;
+}
+
+td {
+    vertical-align: top;
+    border-bottom: 1px solid $grey-color-light;
+}
+/**
+ * Horizontal rule
+ */
+hr {
+    border: none;
+    border-top: 1px solid lighten($grey-color, 30%);
+    margin: $spacing-unit auto;
+}
+/**
+ * Clearfix
+ */
+%clearfix {
+    &:after {
+        content: "";
+        display: table;
+        clear: both;
+    }
 }
