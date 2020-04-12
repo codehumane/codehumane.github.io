@@ -126,6 +126,7 @@ pre {
 code {
     padding: 1px 5px;
     font-family: $code-font-family;
+    font-size: $small-font-size;
     color: #f14e32;
 }
 
@@ -150,7 +151,8 @@ table {
     max-width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    table-layout: fixed;
+    display: block;
+    overflow: auto;
 }
 
 td,
