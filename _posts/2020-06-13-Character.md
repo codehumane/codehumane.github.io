@@ -15,11 +15,11 @@ date: 2020-06-13 00:00:01 +0900
 
 ## supplementary characters
 
-1. 유니코드는 그 이후로도 계속 변화했고, 현재는 16비트 이상으로 표현되는 문자를 허용.
+1. `char` 데이터 타입은 오리지널 유니코드 명세에 기반했지만, 유니코드는 그 이후로도 계속 변화했고 현재는 16비트 이상으로 표현되는 문자를 허용.
 2. 유효한 *코드 포인트<sup>code points</sup>* 범위는 현재 U+0000에서 U+10FFFF 까지.
 3. *Unicode scalar value*라고 부름.
 4. 이 중에서 U+0000에서 U+FFFF까지의 문자 집합을 *Basic Multilingual Plane*(BMP)라고 부름.
-5. U+FFFF를 넘어가는 코드 포인트의 문자들은 *supplementary characters*로 부름.
+5. 그리고 U+FFFF를 넘어가는 코드 포인트의 문자들은 *supplementary characters*로 부름.
 6. 자바 플랫폼은 UTF-16을 `char` 배열과 `String`, `StringBuffer` 클래스에서 사용.
 7. 그래서 supplementary characters를 `char` 값의 짝으로 표현.
 8. [About Supplementary Characters](https://docs.microsoft.com/en-us/windows/win32/intl/surrogates-and-supplementary-characters#about-supplementary-characters)에 따르면 이 방식을 *surrogate pair*라고 부름.
